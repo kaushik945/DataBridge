@@ -55,7 +55,7 @@ docker compose exec -T -e AI_MODE=mock -e DATABASE_URL=postgresql+psycopg://data
 
 It resets only databridge_test and runs no paid inference. [Evaluation](docs/evaluation.md) documents the frozen development set and real-model commands. Store new raw results in ignored .local-evidence or .tools directories; sanitize deliberately before publication. Do not overwrite historical evidence or relabel a seen regression as unseen held-out validation.
 
-CI runs mock backend/evaluation/browser checks plus a separate optional-SDK image test. It requires no private credentials, GPU or cloud account. Keep real-model checks opt-in. Add focused deterministic regression tests when changing validation, approvals, idempotency or agent contracts. Run formatters on files you change and include actual checks/limitations in the pull request.
+CI pins Ubuntu 24.04, which supports the locked Playwright 1.56.1 browser dependencies. An initial ubuntu-latest run resolved to Ubuntu 26.04 and failed before browser tests because that Playwright version does not support it. CI runs mock backend/evaluation/browser checks plus a separate optional-SDK image test. It requires no private credentials, GPU or cloud account. Keep real-model checks opt-in. Add focused deterministic regression tests when changing validation, approvals, idempotency or agent contracts. Run formatters on files you change and include actual checks/limitations in the pull request.
 
 ## Publication hygiene
 

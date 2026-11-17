@@ -2,7 +2,7 @@ name: verify
 on: [push, pull_request]
 jobs:
   local:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     env:
       E2E_USERNAME: ci-operator
       E2E_PASSWORD: ci-ephemeral-operator-password
@@ -48,7 +48,7 @@ jobs:
       - run: docker compose down -v
         if: always()
   vertex-sdk:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - run: docker build --build-arg INSTALL_VERTEX=true -f backend/Dockerfile -t databridge-vertex .

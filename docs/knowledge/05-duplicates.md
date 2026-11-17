@@ -1,0 +1,2 @@
+# Duplicate policy
+Email is trimmed and Unicode casefolded before uniqueness checks. The entire email is casefolded, including the local part. Existing destination emails are rejected; v1 never updates customers. Within one file, the first occurrence reserves the normalized email even if its other fields are invalid; every later occurrence is rejected. Order follows the original file. No plus-address removal, dot removal, or provider-specific normalization occurs.

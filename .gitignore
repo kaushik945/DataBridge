@@ -1,0 +1,70 @@
+# Local configuration and credentials
+.env
+.env.*
+!.env.example
+!*.env.example
+.local-operator.json
+application_default_credentials.json
+*service-account*.json
+*.pem
+*.key
+
+# Dependencies, model downloads and generated output
+.tools/
+.local-evidence/
+.npm-cache/
+node_modules/
+dist/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+*.tsbuildinfo
+test-results/
+playwright-report/
+coverage/
+htmlcov/
+.coverage*
+coverage.xml
+*.gguf
+*.safetensors
+*.onnx
+*.pt
+*.pth
+
+# Local data and cloud state
+uploads/
+backups/
+*.dump
+*.sqlite*
+.terraform/
+*.tfstate*
+*.tfvars
+
+# Historical evidence stays intact locally. Public extracts live under
+# docs/evaluation, docs/examples and docs/images.
+/IMPLEMENTATION_PLAN.md
+/docs/*.json
+/docs/*.csv
+/docs/*.txt
+/docs/assessment-v1/
+/docs/screenshots/
+/docs/local-ai.md
+/docs/local-results.md
+/docs/local-vertex.md
+/docs/evaluation-v1.md
+/docs/country-review-investigation.md
+/scripts/update-local-docs.mjs
+/scripts/finalize-local-docs.mjs
+/scripts/finish-local-handoff.mjs
+/scripts/network-probe.mjs
+/scripts/investigate-country-review.py
+/scripts/export-local-run.py
+/scripts/assess-reviewer.mjs
+/scripts/assess-local-coverage.py
+
+# OS and editor state
+.DS_Store
+Thumbs.db
+.vscode/

@@ -1,0 +1,2 @@
+# Validation and human approval
+Review the original and transformed rows, accepted count, rejected count, and error report. Choose import only valid rows with a retained rejected-row report, or cancel and fix the file. Approval binds the original file hash, mapping version/hash, validation hash, and row policy. Changing a mapping invalidates validation and approval. An AI review is advice and cannot approve or import anything.

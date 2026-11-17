@@ -1,0 +1,2 @@
+# Allowed transformations
+An import mapping can rename a column to a destination, trim surrounding whitespace, parse a date using a selected format, and replace categories using explicit pairs. Category mapping applies to tier and country only. Date parsing applies to signup_date only. No scripts, SQL expressions, inferred values, concatenation, or arbitrary functions are accepted. Email normalization is an authoritative destination invariant.

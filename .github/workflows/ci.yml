@@ -1,0 +1,55 @@
+name: verify
+on: [push, pull_request]
+jobs:
+  local:
+    runs-on: ubuntu-latest
+    env:
+      E2E_USERNAME: ci-operator
+      E2E_PASSWORD: ci-ephemeral-operator-password
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - run: cp .env.example .env
+      - run: docker compose up --build -d
+      - name: Wait for API
+        run: |
+          for attempt in $(seq 1 40); do
+            if curl --fail http://localhost:8000/api/health; then exit 0; fi
+            sleep 2
+          done
+          docker compose logs api
+          exit 1
+      - run: docker compose exec -T api python -m app.cli ingest
+      - run: docker compose exec -T -e SETUP_PASSWORD="$E2E_PASSWORD" api python -m app.cli setup-operator --username "$E2E_USERNAME"
+      - run: docker compose exec -T db createdb -U databridge databridge_test
+      - run: docker compose exec -T api ruff check app tests
+      - run: docker compose exec -T api ruff format --check app tests
+      - run: docker compose exec -T -e DATABASE_URL=postgresql+psycopg://databridge:local-development-only@db:5432/databridge_test api python -m pytest -q
+      - run: docker compose exec -T -e DATABASE_URL=postgresql+psycopg://databridge:local-development-only@db:5432/databridge_test api python -m app.evaluate --output /tmp/evaluation.json
+      - run: docker compose cp api:/tmp/evaluation.json docs/ci-mock-evaluation.json
+      - run: npm ci && npm run format:check && npm run typecheck && npm run build
+        working-directory: frontend
+      - run: npx playwright install --with-deps chromium
+        working-directory: frontend
+      - run: npm run test:e2e
+        working-directory: frontend
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: verification
+          path: |
+            frontend/playwright-report
+            docs/screenshots
+            docs/ci-mock-evaluation.json
+      - run: docker compose down -v
+        if: always()
+  vertex-sdk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build --build-arg INSTALL_VERTEX=true -f backend/Dockerfile -t databridge-vertex .
+      - run: docker run --rm databridge-vertex python -m pytest tests/test_agents.py -q

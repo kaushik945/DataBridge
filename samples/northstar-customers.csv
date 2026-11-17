@@ -1,0 +1,7 @@
+full_name,email_address,joined,plan,country
+ Maya Chen ,maya.chen@example.com,2025-01-14,professional,US
+Arjun Rao,arjun.rao@example.com,2025-02-03,starter,IN
+Sofia Weber,sofia.weber@example.com,2025-03-19,business,DE
+Oliver Reed,not-an-email,2025-01-23,pro,GB
+Amelia Brooks,amelia.brooks@example.com,2025-02-30,basic,CA
+Maya Duplicate,MAYA.CHEN@example.com,2025-04-01,basic,US

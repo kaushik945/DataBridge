@@ -1,0 +1,2 @@
+# CSV file requirements
+Use UTF-8 with an optional byte order mark, comma delimiters, and one nonempty header row. Default maximums are 5 MB, 10,000 data rows, and 50 columns. Headers must be nonempty and unique ignoring surrounding whitespace and case. Quoted fields may contain commas or newlines. Row numbers refer to the original physical ending line, including the header. Empty inputs and inconsistent row lengths are rejected.

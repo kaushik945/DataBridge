@@ -1,0 +1,46 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: databridge
+spec:
+  template:
+    metadata:
+      annotations:
+        autoscaling.knative.dev/maxScale: '2'
+        run.googleapis.com/cloudsql-instances: PROJECT:REGION:databridge-db
+    spec:
+      serviceAccountName: databridge-app@PROJECT.iam.gserviceaccount.com
+      containerConcurrency: 8
+      timeoutSeconds: 300
+      containers:
+        - image: REGION-docker.pkg.dev/PROJECT/REPOSITORY/databridge:TAG
+          ports:
+            - containerPort: 8080
+          resources:
+            limits:
+              memory: 2Gi
+              cpu: '1'
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: databridge-database-url
+                  key: latest
+            - name: COOKIE_SECURE
+              value: 'true'
+            - name: AI_MODE
+              value: vertex
+            - name: ALLOWED_ORIGINS
+              value: https://YOUR-SERVICE-URL
+            - name: GOOGLE_CLOUD_PROJECT
+              value: PROJECT
+            - name: GOOGLE_CLOUD_LOCATION
+              value: REGION
+            - name: VERTEX_MODEL
+              value: YOUR-VERIFIED-GENERATION-MODEL
+            - name: EMBEDDING_MODEL
+              value: YOUR-VERIFIED-EMBEDDING-MODEL
+            - name: EMBEDDING_DIMENSIONS
+              value: '768'
+            - name: GCS_BUCKET
+              value: YOUR-BUCKET

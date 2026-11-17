@@ -1,0 +1,2 @@
+# Import conflicts and retries
+Accepted rows are inserted in one PostgreSQL transaction. Destination emails are checked again during import. A new conflict after approval causes the entire import to be cancelled and requires revalidation. Repeating the same approved import with the same idempotency key returns its persisted result. Reusing a key for a different approved request fails. Database uniqueness remains the final duplicate protection.

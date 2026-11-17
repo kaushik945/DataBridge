@@ -1,0 +1,1088 @@
+{
+  "description": "Sanitized aggregate and per-case results from the first 16-case internally authored synthetic assessment. No authentication state or full model requests are included.",
+  "status": "Now seen development/regression material after informing the optional Reviewer default.",
+  "method": {
+    "label_digest": "d9ebf684ae2b3ae7140304db7a4b368e6a8df202fa19fa75318054edb078cf03",
+    "backend_content_digest": "eec5f35206078123a95731888387d142386423f414802a325f6853ddf865f49c",
+    "revision_note": "Historical pre-release content digest, not a Git commit identifier.",
+    "model": "qwen3:4b",
+    "embedding_model": "nomic-embed-text:v1.5",
+    "embedding_dimensions": 768,
+    "config": {
+      "local_model": "qwen3:4b",
+      "local_embedding_model": "nomic-embed-text:v1.5",
+      "local_context": 4096,
+      "local_output_tokens": 1400,
+      "local_timeout_seconds": 120
+    },
+    "ollama_version": {
+      "version": "0.40.16"
+    },
+    "hardware": "Windows laptop, NVIDIA RTX 4050 Laptop GPU 6 GB, 16 GB system RAM",
+    "ordering": "Baseline first; alternate I/IR then IR/I by case index, sequentially. One development warm-up precedes measurements."
+  },
+  "summary": {
+    "baseline": {
+      "attempted": 16,
+      "completed": 16,
+      "structured_failures": 0,
+      "runtime_failures": 0,
+      "source_correct": 74,
+      "source_denominator": 80,
+      "per_field": {
+        "name": {
+          "correct": 15,
+          "denominator": 16
+        },
+        "email": {
+          "correct": 14,
+          "denominator": 16
+        },
+        "signup_date": {
+          "correct": 15,
+          "denominator": 16
+        },
+        "subscription_tier": {
+          "correct": 15,
+          "denominator": 16
+        },
+        "country_code": {
+          "correct": 15,
+          "denominator": 16
+        }
+      },
+      "exact_correct": 14,
+      "exact_denominator": 16,
+      "unsupported_pairs_observed": 0,
+      "date_clarification_correct": 3,
+      "date_clarification_denominator": 3,
+      "median_wall_ms": 0.5569999999999999,
+      "mean_wall_ms": 0.953125,
+      "input_tokens_known": 0,
+      "output_tokens_known": 0,
+      "usage_complete": true,
+      "citation_ids": {
+        "valid": 0,
+        "proposed": 0
+      },
+      "supported_category_claims": 0,
+      "category_claim_denominator": 0
+    },
+    "investigator": {
+      "attempted": 16,
+      "completed": 16,
+      "structured_failures": 0,
+      "runtime_failures": 0,
+      "source_correct": 78,
+      "source_denominator": 80,
+      "per_field": {
+        "name": {
+          "correct": 16,
+          "denominator": 16
+        },
+        "email": {
+          "correct": 14,
+          "denominator": 16
+        },
+        "signup_date": {
+          "correct": 16,
+          "denominator": 16
+        },
+        "subscription_tier": {
+          "correct": 16,
+          "denominator": 16
+        },
+        "country_code": {
+          "correct": 16,
+          "denominator": 16
+        }
+      },
+      "exact_correct": 5,
+      "exact_denominator": 16,
+      "unsupported_pairs_observed": 0,
+      "date_clarification_correct": 3,
+      "date_clarification_denominator": 3,
+      "median_wall_ms": 6325.912,
+      "mean_wall_ms": 6262.804375,
+      "input_tokens_known": 23519,
+      "output_tokens_known": 5003,
+      "usage_complete": true,
+      "citation_ids": {
+        "valid": 86,
+        "proposed": 86
+      },
+      "supported_category_claims": 0,
+      "category_claim_denominator": 0
+    },
+    "investigator_reviewer": {
+      "attempted": 16,
+      "completed": 16,
+      "structured_failures": 0,
+      "runtime_failures": 0,
+      "source_correct": 78,
+      "source_denominator": 80,
+      "per_field": {
+        "name": {
+          "correct": 16,
+          "denominator": 16
+        },
+        "email": {
+          "correct": 14,
+          "denominator": 16
+        },
+        "signup_date": {
+          "correct": 16,
+          "denominator": 16
+        },
+        "subscription_tier": {
+          "correct": 16,
+          "denominator": 16
+        },
+        "country_code": {
+          "correct": 16,
+          "denominator": 16
+        }
+      },
+      "exact_correct": 5,
+      "exact_denominator": 16,
+      "unsupported_pairs_observed": 0,
+      "date_clarification_correct": 3,
+      "date_clarification_denominator": 3,
+      "median_wall_ms": 9838.9925,
+      "mean_wall_ms": 10977.397375,
+      "input_tokens_known": 62106,
+      "output_tokens_known": 8429,
+      "usage_complete": true,
+      "citation_ids": {
+        "valid": 98,
+        "proposed": 98
+      },
+      "supported_category_claims": 0,
+      "category_claim_denominator": 0
+    }
+  },
+  "reviewer": {
+    "initial_review": {
+      "reviewed_cases": 16,
+      "actual_error_issues": 13,
+      "true_positive_issues": 10,
+      "false_positive_issues": 0,
+      "false_negative_issues": 3,
+      "precision": 1,
+      "recall": 0.7692307692307693
+    },
+    "all_review_calls": {
+      "reviewed_proposals": 17,
+      "actual_error_issues": 14,
+      "true_positive_issues": 11,
+      "false_positive_issues": 0,
+      "false_negative_issues": 3,
+      "precision": 1,
+      "recall": 0.7857142857142857,
+      "correct_reviewed_proposals": 5,
+      "correct_proposals_with_false_mapping_alarms": 0,
+      "incremental_true_positives": 0,
+      "incremental_error_denominator": 1,
+      "incremental_precision": null,
+      "incremental_recall": 0,
+      "raw_support_ids_valid": 24,
+      "raw_support_ids_total": 24,
+      "raw_support_ids_in_correct_category": 4,
+      "initial_raw_slash_null_correct": 6,
+      "initial_raw_slash_null_denominator": 6,
+      "date_guard_clear_actions": 0
+    },
+    "annotation_method": "Assistant inspection against the frozen rubric. No independent human annotation.",
+    "limitations": [
+      "All true detections were already identified by Python. Detection metrics do not establish Reviewer incremental value.",
+      "One otherwise correct validator restatement adds unsupported row-numbering speculation, recorded separately above.",
+      "No nonidentity category claims were emitted by the AI variants. Category evidence-support rates are N/A, and the documented starter/basic transform was missed.",
+      "The cases are now seen development/regression material after this analysis and default-setting decision. No subsequent run may be called unseen."
+    ]
+  },
+  "cases": [
+    {
+      "id": "decorated_headers",
+      "hash": "908250946e6167998e8af179a4d9242bb84c808bea56b53bcc1df259041ebd62",
+      "required_human_decisions": {},
+      "variants": {
+        "baseline": {
+          "success": true,
+          "source_correct": 4,
+          "exact": false,
+          "errors": {
+            "email": [
+              "source"
+            ]
+          },
+          "wall_ms": 6.27,
+          "usage": {
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          "date_guard_actions": [],
+          "revision_count": 0
+        },
+        "investigator": {
+          "success": true,
+          "source_correct": 5,
+          "exact": true,
+          "errors": {},
+          "wall_ms": 6279.253,
+          "usage": {
+            "input_tokens": 1462,
+            "output_tokens": 307
+          },
+          "date_guard_actions": [],
+          "revision_count": 0
+        },
+        "investigator_reviewer": {
+          "success": true,
+          "source_correct": 5,
+          "exact": true,
+          "errors": {},
+          "wall_ms": 9313.139,
+          "usage": {
+            "input_tokens": 3573,
+            "output_tokens": 466
+          },
+          "date_guard_actions": [],
+          "revision_count": 0
+        }
+      }
+    },
+    {
+      "id": "new_semantic_headers",
+      "hash": "83d7cbf7f6064272aac40a2f8df98ebeeafead836c75f84d66619fc0fb1c015c",
+      "required_human_decisions": {},
+      "variants": {
+        "baseline": {
+          "success": true,
+          "source_correct": 0,
+          "exact": false,
+          "errors": {
+            "name": [
+              "source"
+            ],
+            "email": [
+              "source"
+            ],
+            "signup_date": [
+              "source"
+            ],
+            "subscription_tier": [
+              "source"
+            ],
+            "country_code": [
+              "source"
+            ]
+          },
+          "wall_ms": 0.378,
+          "usage": {
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          "date_guard_actions": [],
+          "revision_count": 0
+        },
+        "investigator_reviewer": {
+          "success": true,
+          "source_correct": 5,
+          "exact": true,
+          "errors": {},
+          "wall_ms": 9839.17,
+          "usage": {
+            "input_tokens": 3548,
+            "output_tokens": 464
+          },
+          "date_guard_actions": [],
+          "revision_count": 0
+        },
+        "investigator": {
+          "success": true,
+          "source_correct": 5,
+          "exact": true,
+          "errors": {},
+          "wall_ms": 5928.927,
+          "usage": {
+            "input_tokens": 1464,
+            "output_tokens": 306
+          },
+          "date_guard_actions": [],
+          "revision_count": 0
+        }
+      }
+    },
+    {
+      "id": "reordered_irrelevant",
+      "hash": "68428c3c7d3c8fa1a025f2d3f9a4554cf959dd94585850db03f4c3cb2454d984",
+      "required_human_decisions": {},
+      "variants": {
+        "baseline": {
+          "success": true,
+          "source_correct": 5,
+          "exact": true,
+          "errors": {},
+          "wall_ms": 0.437,
+          "usage": {
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          "date_guard_actions": [],
+          "revision_count": 0
+        },
+        "investigator": {
+          "success": true,
+          "source_correct": 5,
+          "exact": false,
+          "errors": {
+            "signup_date": [
+              "date_format"
+            ]
+          },
+          "wall_ms": 6160.198,
+          "usage": {
+            "input_tokens": 1485,
+            "output_tokens": 304
+          },
+          "date_guard_actions": [],
+          "revision_count": 0
+        },
+        "investigator_reviewer": {
+          "success": true,
+          "source_correct": 5,
+          "exact": false,
+          "errors": {
+            "signup_date": [
+              "date_format"
+            ]
+          },
+          "wall_ms": 8813.809,
+          "usage": {
+            "input_tokens": 3587,
+            "output_tokens": 434
+          },
+          "date_guard_actions": [],
+          "revision_count": 0
+        }
+      }
+    },
+    {
+      "id": "missing_email",
+      "hash": "af596f3159719a1323072a60124855e147646a6aa1316a37f2b14dd768360988",
+      "required_human_decisions": {
+        "email": "missing_source"
+      },
+      "variants": {
+        "baseline": {
+          "success": true,
+          "source_correct": 5,
+          "exact": true,
+          "errors": {},
+          "wall_ms": 0.334,
+          "usage": {
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          "date_guard_actions": [],
+          "revision_count": 0
+        },
+        "investigator_reviewer": {
+          "success": true,
+          "source_correct": 4,
+          "exact": false,
+          "errors": {
+            "email": [
+              "source"
+            ],
+            "signup_date": [
+              "date_format"
+            ]
+          },
+          "wall_ms": 9838.815,
+          "usage": {
+            "input_tokens": 3537,
+            "output_tokens": 465
+          },
+          "date_guard_actions": [],
+          "revision_count": 0
+        },
+        "investigator": {
+          "success": true,
+          "source_correct": 4,
+          "exact": false,
+          "errors": {
+            "email": [
+              "source"
+            ],
+            "signup_date": [
+              "date_format"
+            ]
+          },
+          "wall_ms": 6294.223,
+          "usage": {
+            "input_tokens": 1441,
+            "output_tokens": 329
+          },
+          "date_guard_actions": [],
+          "revision_count": 0
+        }
+      }
+    },
+    {
+      "id": "blank_optional",
+      "hash": "c30e71b6f42fb69e4cdd15d5b9db255c7478b5bb51aba76f8accad0dd0ff7b81",
+      "required_human_decisions": {},
+      "variants": {
+        "baseline": {
+          "success": true,
+          "source_correct": 5,
+          "exact": true,
+          "errors": {},
+          "wall_ms": 0.544,
+          "usage": {
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          "date_guard_actions": [],
+          "revision_count": 0
+        },
+        "investigator": {
+          "success": true,
+          "source_correct": 5,
+          "exact": false,
+          "errors": {
+            "signup_date": [
+              "date_format"
+            ]
+          },
+          "wall_ms": 6696.336,
+          "usage": {
+            "input_tokens": 1455,
+            "output_tokens": 334
+          },
+          "date_guard_actions": [],
+          "revision_count": 0
+        },
+        "investigator_reviewer": {
+          "success": true,
+          "source_correct": 5,
+          "exact": false,
+          "errors": {
+            "signup_date": [
+              "date_format"
+            ]
+          },
+          "wall_ms": 9897.09,
+          "usage": {
+            "input_tokens": 3557,
+            "output_tokens": 468
+          },
+          "date_guard_actions": [],
+          "revision_count": 0
+        }
+      }
+    },
+    {
+      "id": "absent_optional",
+      "hash": "441874d7586716391d0eb72e2066b09a8ab2bebe32c09c488e8bc943e3abcad6",
+      "required_human_decisions": {},
+      "variants": {
+        "baseline": {
+          "success": true,
+          "source_correct": 5,
+          "exact": true,
+          "errors": {},
+          "wall_ms": 0.498,
+          "usage": {
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          "date_guard_actions": [],
+          "revision_count": 0
+        },
+        "investigator_reviewer": {
+          "success": true,
+          "source_correct": 5,
+          "exact": false,
+          "errors": {
+            "signup_date": [
+              "date_format"
+            ]
+          },
+          "wall_ms": 8573.849,
+          "usage": {
+            "input_tokens": 3366,
+            "output_tokens": 378
+          },
+          "date_guard_actions": [],
+          "revision_count": 0
+        },
+        "investigator": {
+          "success": true,
+          "source_correct": 5,
+          "exact": false,
+          "errors": {
+            "signup_date": [
+              "date_format"
+            ]
+          },
+          "wall_ms": 5464.032,
+          "usage": {
+            "input_tokens": 1446,
+            "output_tokens": 246
+          },
+          "date_guard_actions": [],
+          "revision_count": 0
+        }
+      }
+    },
+    {
+      "id": "documented_alias",
+      "hash": "319d640c777712d9ef17bfdbed200cb15228d0ce29c096d3265928c78b5e18bf",
+      "required_human_decisions": {},
+      "variants": {
+        "baseline": {
+          "success": true,
+          "source_correct": 5,
+          "exact": true,
+          "errors": {},
+          "wall_ms": 0.564,
+          "usage": {
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          "date_guard_actions": [],
+          "revision_count": 0
+        },
+        "investigator": {
+          "success": true,
+          "source_correct": 5,
+          "exact": false,
+          "errors": {
+            "subscription_tier": [
+              "categories"
+            ]
+          },
+          "wall_ms": 6357.601,
+          "usage": {
+            "input_tokens": 1451,
+            "output_tokens": 300
+          },
+          "date_guard_actions": [],
+          "revision_count": 0
+        },
+        "investigator_reviewer": {
+          "success": true,
+          "source_correct": 5,
+          "exact": false,
+          "errors": {
+            "subscription_tier": [
+              "categories"
+            ]
+          },
+          "wall_ms": 10188.029,
+          "usage": {
+            "input_tokens": 3535,
+            "output_tokens": 442
+          },
+          "date_guard_actions": [],
+          "revision_count": 0
+        }
+      }
+    },
+    {
+      "id": "undocumented_alias",
+      "hash": "ec40d5d1184cb368d2a40cb4f82dbe48af6a91c6cd7476ff0cbaf955e1350ebd",
+      "required_human_decisions": {
+        "subscription_tier": "category_decision"
+      },
+      "variants": {
+        "baseline": {
+          "success": true,
+          "source_correct": 5,
+          "exact": true,
+          "errors": {},
+          "wall_ms": 0.613,
+          "usage": {
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          "date_guard_actions": [],
+          "revision_count": 0
+        },
+        "investigator_reviewer": {
+          "success": true,
+          "source_correct": 5,
+          "exact": false,
+          "errors": {
+            "signup_date": [
+              "date_format"
+            ]
+          },
+          "wall_ms": 10183.526,
+          "usage": {
+            "input_tokens": 3580,
+            "output_tokens": 476
+          },
+          "date_guard_actions": [],
+          "revision_count": 0
+        },
+        "investigator": {
+          "success": true,
+          "source_correct": 5,
+          "exact": false,
+          "errors": {
+            "signup_date": [
+              "date_format"
+            ]
+          },
+          "wall_ms": 6387.374,
+          "usage": {
+            "input_tokens": 1457,
+            "output_tokens": 334
+          },
+          "date_guard_actions": [],
+          "revision_count": 0
+        }
+      }
+    },
+    {
+      "id": "ambiguous_slash",
+      "hash": "b85939fc46288f24e8724517ee2990a49d29f86d1e046b7c1f589bb67f35662b",
+      "required_human_decisions": {
+        "signup_date": "date_selection"
+      },
+      "variants": {
+        "baseline": {
+          "success": true,
+          "source_correct": 5,
+          "exact": true,
+          "errors": {},
+          "wall_ms": 0.483,
+          "usage": {
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          "date_guard_actions": [],
+          "revision_count": 0
+        },
+        "investigator": {
+          "success": true,
+          "source_correct": 5,
+          "exact": true,
+          "errors": {},
+          "wall_ms": 6118.165,
+          "usage": {
+            "input_tokens": 1451,
+            "output_tokens": 300
+          },
+          "date_guard_actions": [],
+          "revision_count": 0
+        },
+        "investigator_reviewer": {
+          "success": true,
+          "source_correct": 5,
+          "exact": true,
+          "errors": {},
+          "wall_ms": 7988.514,
+          "usage": {
+            "input_tokens": 3523,
+            "output_tokens": 385
+          },
+          "date_guard_actions": [],
+          "revision_count": 0
+        }
+      }
+    },
+    {
+      "id": "unambiguous_slash_confirmation",
+      "hash": "fe228d8505ad8e1ea799e604f056fcfc7684cc699b5ecafea4652e8d2e6c318e",
+      "required_human_decisions": {
+        "signup_date": "date_selection"
+      },
+      "variants": {
+        "baseline": {
+          "success": true,
+          "source_correct": 5,
+          "exact": true,
+          "errors": {},
+          "wall_ms": 0.55,
+          "usage": {
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          "date_guard_actions": [],
+          "revision_count": 0
+        },
+        "investigator_reviewer": {
+          "success": true,
+          "source_correct": 5,
+          "exact": true,
+          "errors": {},
+          "wall_ms": 8922.448,
+          "usage": {
+            "input_tokens": 3566,
+            "output_tokens": 417
+          },
+          "date_guard_actions": [],
+          "revision_count": 0
+        },
+        "investigator": {
+          "success": true,
+          "source_correct": 5,
+          "exact": true,
+          "errors": {},
+          "wall_ms": 6381.55,
+          "usage": {
+            "input_tokens": 1457,
+            "output_tokens": 332
+          },
+          "date_guard_actions": [],
+          "revision_count": 0
+        }
+      }
+    },
+    {
+      "id": "slash_outside_sample",
+      "hash": "1e7792e92521506d7842a6f5f03377246b3ed3fcad402e0c6c8c6307ba5076f8",
+      "required_human_decisions": {
+        "signup_date": "date_selection"
+      },
+      "variants": {
+        "baseline": {
+          "success": true,
+          "source_correct": 5,
+          "exact": true,
+          "errors": {},
+          "wall_ms": 0.922,
+          "usage": {
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          "date_guard_actions": [],
+          "revision_count": 0
+        },
+        "investigator": {
+          "success": true,
+          "source_correct": 5,
+          "exact": true,
+          "errors": {},
+          "wall_ms": 6662.25,
+          "usage": {
+            "input_tokens": 1555,
+            "output_tokens": 334
+          },
+          "date_guard_actions": [],
+          "revision_count": 0
+        },
+        "investigator_reviewer": {
+          "success": true,
+          "source_correct": 5,
+          "exact": true,
+          "errors": {},
+          "wall_ms": 8568.009,
+          "usage": {
+            "input_tokens": 3764,
+            "output_tokens": 419
+          },
+          "date_guard_actions": [],
+          "revision_count": 0
+        }
+      }
+    },
+    {
+      "id": "tier_outside_sample",
+      "hash": "754d234aa7a24d94594368c103e07e38474a6907f14f8758d9bc4cc5d5cc98e2",
+      "required_human_decisions": {
+        "subscription_tier": "category_decision"
+      },
+      "variants": {
+        "baseline": {
+          "success": true,
+          "source_correct": 5,
+          "exact": true,
+          "errors": {},
+          "wall_ms": 1.152,
+          "usage": {
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          "date_guard_actions": [],
+          "revision_count": 0
+        },
+        "investigator_reviewer": {
+          "success": true,
+          "source_correct": 5,
+          "exact": false,
+          "errors": {
+            "signup_date": [
+              "date_format"
+            ]
+          },
+          "wall_ms": 11251.911,
+          "usage": {
+            "input_tokens": 3776,
+            "output_tokens": 584
+          },
+          "date_guard_actions": [],
+          "revision_count": 0
+        },
+        "investigator": {
+          "success": true,
+          "source_correct": 5,
+          "exact": false,
+          "errors": {
+            "signup_date": [
+              "date_format"
+            ]
+          },
+          "wall_ms": 6457.712,
+          "usage": {
+            "input_tokens": 1555,
+            "output_tokens": 334
+          },
+          "date_guard_actions": [],
+          "revision_count": 0
+        }
+      }
+    },
+    {
+      "id": "instruction_in_tier",
+      "hash": "ec104735cf6e970ae45b669949fe086b0e8463a8410aae57402569a63355dcaf",
+      "required_human_decisions": {
+        "subscription_tier": "category_decision"
+      },
+      "variants": {
+        "baseline": {
+          "success": true,
+          "source_correct": 5,
+          "exact": true,
+          "errors": {},
+          "wall_ms": 0.617,
+          "usage": {
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          "date_guard_actions": [],
+          "revision_count": 0
+        },
+        "investigator": {
+          "success": true,
+          "source_correct": 5,
+          "exact": false,
+          "errors": {
+            "signup_date": [
+              "date_format"
+            ]
+          },
+          "wall_ms": 7203.132,
+          "usage": {
+            "input_tokens": 1464,
+            "output_tokens": 364
+          },
+          "date_guard_actions": [],
+          "revision_count": 0
+        },
+        "investigator_reviewer": {
+          "success": true,
+          "source_correct": 5,
+          "exact": false,
+          "errors": {
+            "signup_date": [
+              "date_format"
+            ]
+          },
+          "wall_ms": 10240.228,
+          "usage": {
+            "input_tokens": 3566,
+            "output_tokens": 487
+          },
+          "date_guard_actions": [],
+          "revision_count": 0
+        }
+      }
+    },
+    {
+      "id": "indistinguishable_email_columns",
+      "hash": "1350cc9f4a785d161b4648fe12e98d839b13b290850078ade65a6b026702c09e",
+      "required_human_decisions": {
+        "email": "source_selection"
+      },
+      "variants": {
+        "baseline": {
+          "success": true,
+          "source_correct": 5,
+          "exact": true,
+          "errors": {},
+          "wall_ms": 0.54,
+          "usage": {
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          "date_guard_actions": [],
+          "revision_count": 0
+        },
+        "investigator_reviewer": {
+          "success": true,
+          "source_correct": 4,
+          "exact": false,
+          "errors": {
+            "email": [
+              "source"
+            ],
+            "signup_date": [
+              "date_format"
+            ]
+          },
+          "wall_ms": 9736.973,
+          "usage": {
+            "input_tokens": 3544,
+            "output_tokens": 430
+          },
+          "date_guard_actions": [],
+          "revision_count": 0
+        },
+        "investigator": {
+          "success": true,
+          "source_correct": 4,
+          "exact": false,
+          "errors": {
+            "email": [
+              "source"
+            ],
+            "signup_date": [
+              "date_format"
+            ]
+          },
+          "wall_ms": 6109.322,
+          "usage": {
+            "input_tokens": 1465,
+            "output_tokens": 300
+          },
+          "date_guard_actions": [],
+          "revision_count": 0
+        }
+      }
+    },
+    {
+      "id": "missing_name_with_note",
+      "hash": "0a02f8c766c4e7fc19314e2818fd3277a92f673769aa880e9935b2f6270fd543",
+      "required_human_decisions": {
+        "name": "missing_source"
+      },
+      "variants": {
+        "baseline": {
+          "success": true,
+          "source_correct": 5,
+          "exact": true,
+          "errors": {},
+          "wall_ms": 0.585,
+          "usage": {
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          "date_guard_actions": [],
+          "revision_count": 0
+        },
+        "investigator": {
+          "success": true,
+          "source_correct": 5,
+          "exact": false,
+          "errors": {
+            "signup_date": [
+              "date_format"
+            ]
+          },
+          "wall_ms": 5223.915,
+          "usage": {
+            "input_tokens": 1454,
+            "output_tokens": 245
+          },
+          "date_guard_actions": [],
+          "revision_count": 0
+        },
+        "investigator_reviewer": {
+          "success": true,
+          "source_correct": 5,
+          "exact": false,
+          "errors": {
+            "signup_date": [
+              "date_format"
+            ]
+          },
+          "wall_ms": 31870.195,
+          "usage": {
+            "input_tokens": 8523,
+            "output_tokens": 1648
+          },
+          "date_guard_actions": [],
+          "revision_count": 1
+        }
+      }
+    },
+    {
+      "id": "invalid_calendar_value",
+      "hash": "0386b1f41fe05661abc3f164286b38e9708591ee2293169976e2c4476b71f8c7",
+      "required_human_decisions": {
+        "signup_date": "row_correction"
+      },
+      "variants": {
+        "baseline": {
+          "success": true,
+          "source_correct": 5,
+          "exact": true,
+          "errors": {},
+          "wall_ms": 0.763,
+          "usage": {
+            "input_tokens": 0,
+            "output_tokens": 0
+          },
+          "date_guard_actions": [],
+          "revision_count": 0
+        },
+        "investigator_reviewer": {
+          "success": true,
+          "source_correct": 5,
+          "exact": false,
+          "errors": {
+            "signup_date": [
+              "date_format"
+            ]
+          },
+          "wall_ms": 10412.653,
+          "usage": {
+            "input_tokens": 3561,
+            "output_tokens": 466
+          },
+          "date_guard_actions": [],
+          "revision_count": 0
+        },
+        "investigator": {
+          "success": true,
+          "source_correct": 5,
+          "exact": false,
+          "errors": {
+            "signup_date": [
+              "date_format"
+            ]
+          },
+          "wall_ms": 6480.88,
+          "usage": {
+            "input_tokens": 1457,
+            "output_tokens": 334
+          },
+          "date_guard_actions": [],
+          "revision_count": 0
+        }
+      }
+    }
+  ],
+  "limits": [
+    "Small synthetic, internally authored set. Historical development cases were not held-out evidence.",
+    "Exact scores include predeclared acceptable abstentions and identity-pair alternatives.",
+    "Mapping citation IDs are constrained by decoding; validity does not establish evidence support.",
+    "No nonidentity AI category claims were emitted; category evidence-support rates are N/A.",
+    "Raw historical artifacts remain preserved locally and are excluded from public Git history."
+  ]
+}

@@ -1,0 +1,2 @@
+# Common import errors
+An invalid email needs a valid address, not a placeholder. A required name cannot be whitespace. Unsupported tiers need an explicit approved category map or a corrected source value. Date format mismatches need an operator-selected column format or a corrected file. An unknown source column means the mapping references the wrong file. Download rejected rows to fix their original values and upload a new file.

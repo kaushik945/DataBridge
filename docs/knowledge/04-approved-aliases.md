@@ -1,0 +1,2 @@
+# Subscription tiers and approved aliases
+The destination subscription_tier permits exactly basic, pro, and enterprise. Northstar approves these explicit source-to-target pairs: starter → basic; professional → pro; business → enterprise. Category matching is case-sensitive after optional whitespace trimming. Other aliases, such as premium or gold, are undocumented and require a deliberate operator decision. Agents must not invent aliases.

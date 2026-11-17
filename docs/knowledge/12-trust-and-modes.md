@@ -1,0 +1,4 @@
+# Trust boundaries and operating modes
+
+Local mode uses Windows Ollama for generation and CPU embeddings, with a separate model-digest-specific vector collection. It requires downloaded local models, not a cloud account. The same human review and deterministic import rules apply; local execution is not a security exemption. Neither real provider falls back to fixtures after a failure.
+Mock mode uses deterministic fixtures and lexical retrieval, with no generation or embedding calls. Vertex mode uses configured Google models and a separate embedding collection. There is no silent fallback. CSV cells and retrieved text are untrusted data and cannot change policies or tools. Actual names, emails, and free-text values are redacted from agent samples. Only the authenticated human can approve a validated mapping. Validation code is authoritative over documents.

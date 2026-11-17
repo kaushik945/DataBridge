@@ -1,0 +1,175 @@
+{
+  "description": "Sanitized excerpt from a real known-development local run on synthetic data. Identifiers, account state, endpoint details and full prompts are omitted.",
+  "mode": "local",
+  "model": "qwen3:4b",
+  "sample_scope": {
+    "rows_shown": 3,
+    "total_rows": 4,
+    "authority": "sample observations only; validator_results cover the file"
+  },
+  "evidence": [
+    {
+      "id": "c1699a5e05aa39abee1dba11e03d2f52",
+      "title": "Required fields",
+      "text": "# Required fields\nEvery imported customer needs name, email, signup_date, and subscription_tier. The name must be nonempty, trimmed, and at most 120 characters. Missing source columns require correcting the file; the system cannot supply invented defaults. country_code may be empty.",
+      "document": "02-required-fields.md",
+      "hash": "d80c8f680e23a4efa6c16a053f0a735ef5e13e9c9526127cd58498f01dd3ec04"
+    },
+    {
+      "id": "98676ac33c7310379d6d191fa238bfdc",
+      "title": "Subscription tiers and approved aliases",
+      "text": "# Subscription tiers and approved aliases\nThe destination subscription_tier permits exactly basic, pro, and enterprise. Northstar approves these explicit source-to-target pairs: starter → basic; professional → pro; business → enterprise. Category matching is case-sensitive after optional whitespace trimming. Other aliases, such as premium or gold, are undocumented and require a deliberate operator decision. Agents must not invent aliases.",
+      "document": "04-approved-aliases.md",
+      "hash": "d5c35e3f6ab132525d29ae7475c3c0bee9abc8df2c12042c17cbaf9852e84860"
+    },
+    {
+      "id": "3bff9a055bd9ef5e5abe8369fe0e2ae1",
+      "title": "Northstar customer schema",
+      "text": "# Northstar customer schema\nNorthstar is a fictional subscription product with one customer destination. Its fields are name, email, signup_date, subscription_tier, and optional country_code. Extra source columns are ignored only when the operator leaves them unmapped. Never infer a missing customer value.",
+      "document": "01-schema.md",
+      "hash": "746be2ecfa9c7cbe55da31bf29e9010da8113249c14e27a8e90403983e8f3047"
+    },
+    {
+      "id": "7f2ad1ec7b223a4e995bca0a87134bd8",
+      "title": "Allowed transformations",
+      "text": "# Allowed transformations\nAn import mapping can rename a column to a destination, trim surrounding whitespace, parse a date using a selected format, and replace categories using explicit pairs. Category mapping applies to tier and country only. Date parsing applies to signup_date only. No scripts, SQL expressions, inferred values, concatenation, or arbitrary functions are accepted. Email normalization is an authoritative destination invariant.",
+      "document": "08-transformations.md",
+      "hash": "de5b95d2af564a86a0e47051b467af09d2c5fb8834a1fc9773ea44c35fcfb17a"
+    }
+  ],
+  "initial_investigator_mapping": {
+    "rules": [
+      {
+        "destination": "name",
+        "source": "full_name",
+        "trim": true,
+        "date_format": null,
+        "categories": {},
+        "citations": [
+          "c1699a5e05aa39abee1dba11e03d2f52"
+        ]
+      },
+      {
+        "destination": "email",
+        "source": "email_addr",
+        "trim": true,
+        "date_format": null,
+        "categories": {},
+        "citations": [
+          "c1699a5e05aa39abee1dba11e03d2f52"
+        ]
+      },
+      {
+        "destination": "signup_date",
+        "source": "joined_on",
+        "trim": true,
+        "date_format": "%d/%m/%Y",
+        "categories": {},
+        "citations": [
+          "c1699a5e05aa39abee1dba11e03d2f52",
+          "7f2ad1ec7b223a4e995bca0a87134bd8"
+        ]
+      },
+      {
+        "destination": "subscription_tier",
+        "source": "plan",
+        "trim": true,
+        "date_format": null,
+        "categories": {},
+        "citations": [
+          "98676ac33c7310379d6d191fa238bfdc"
+        ]
+      },
+      {
+        "destination": "country_code",
+        "source": "country",
+        "trim": true,
+        "date_format": null,
+        "categories": {},
+        "citations": [
+          "3bff9a055bd9ef5e5abe8369fe0e2ae1"
+        ]
+      }
+    ]
+  },
+  "date_guard_cleared_sources": [
+    "joined_on"
+  ],
+  "final_mapping": {
+    "rules": [
+      {
+        "trim": true,
+        "source": "full_name",
+        "citations": [
+          "c1699a5e05aa39abee1dba11e03d2f52"
+        ],
+        "categories": {},
+        "date_format": null,
+        "destination": "name"
+      },
+      {
+        "trim": true,
+        "source": "email_addr",
+        "citations": [
+          "c1699a5e05aa39abee1dba11e03d2f52"
+        ],
+        "categories": {},
+        "date_format": null,
+        "destination": "email"
+      },
+      {
+        "trim": true,
+        "source": "joined_on",
+        "citations": [
+          "c1699a5e05aa39abee1dba11e03d2f52",
+          "7f2ad1ec7b223a4e995bca0a87134bd8"
+        ],
+        "categories": {},
+        "date_format": null,
+        "destination": "signup_date"
+      },
+      {
+        "trim": true,
+        "source": "plan",
+        "citations": [
+          "98676ac33c7310379d6d191fa238bfdc"
+        ],
+        "categories": {},
+        "date_format": null,
+        "destination": "subscription_tier"
+      },
+      {
+        "trim": true,
+        "source": "country",
+        "citations": [
+          "3bff9a055bd9ef5e5abe8369fe0e2ae1"
+        ],
+        "categories": {},
+        "date_format": null,
+        "destination": "country_code"
+      }
+    ]
+  },
+  "application_findings": [
+    {
+      "field": "signup_date",
+      "issue_type": "ambiguous_date",
+      "severity": "warning",
+      "explanation": "Slash date order requires explicit human selection. Select an explicit date format for signup_date.",
+      "evidence_ids": [],
+      "validator_ids": [
+        "mapping.signup_date.format"
+      ],
+      "scope": "mapping",
+      "origin": "human_clarification",
+      "verified": true,
+      "blocking": true
+    }
+  ],
+  "usage": {
+    "input_tokens": 3640,
+    "output_tokens": 443
+  },
+  "workflow_duration_ms": 19606,
+  "note": "The initial slash format was cleared by application code. Human selection remains required. This historical example is not a latency comparison with other inputs or warm states."
+}

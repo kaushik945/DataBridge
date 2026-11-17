@@ -1,0 +1,31 @@
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_DB: databridge
+      POSTGRES_USER: databridge
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-local-development-only}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: [CMD-SHELL, pg_isready -U databridge]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+  api:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+      args:
+        INSTALL_VERTEX: ${INSTALL_VERTEX:-false}
+    env_file: .env
+    ports: ["127.0.0.1:8000:8000"]
+    depends_on:
+      db:
+        condition: service_healthy
+  web:
+    build: ./frontend
+    ports: ["127.0.0.1:5173:80"]
+    depends_on: [api]
+volumes:
+  pgdata:

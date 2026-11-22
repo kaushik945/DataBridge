@@ -136,6 +136,14 @@ test("mock upload, mapping, evidence, approval, import and report", async ({
   await expect(
     page.getByText("deterministic-fixture-v1", { exact: true }),
   ).toBeVisible();
+  const categoryPreview = page.locator("section").filter({
+    has: page.getByRole("heading", { name: "Category transformation preview" }),
+  });
+  await page
+    .getByLabel("subscription_tier source", { exact: true })
+    .selectOption("plan");
+  await expect(categoryPreview).toContainText("professional → pro");
+  await expect(categoryPreview).toContainText("1 affected rows");
   await page.getByRole("button", { name: "View source", exact: true }).click();
   await expect(page.getByRole("dialog")).toContainText("professional");
   await page.getByRole("button", { name: "Close source", exact: true }).click();

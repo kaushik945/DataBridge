@@ -20,11 +20,32 @@ Oliver Reed,not-an-email,2025-01-23,pro,GB
 
 The operator maps full_name to name, selects YYYY-MM-DD and confirms the documented professional-to-pro pair. Validation trims the name and accepts Maya's record; Oliver's invalid email stays in the rejected-row report. The supplied six-row sample produces **3 accepted and 3 rejected rows** on an empty destination after those explicit transformations.
 
+## Try the category preview
+
+1. Start real local AI and ingest the policies using the commands below.
+2. Upload [category-preview.csv](samples/category-preview.csv) and select **Suggest mapping**. Open **Tier source coverage** to compare `membership_band` (3/4 supported) with `plan` (0/4, billing cadence). Confirm that the tier source is `membership_band`.
+3. In **Category transformation preview**, inspect `professional` to `pro`, its policy citation, and the two affected rows. The preview shows `gold` as unresolved. Documented lookup adds alias rules without a second model call.
+4. Confirm the sources, leave country unmapped if absent, and explicitly select DD/MM/YYYY for this sample. Edit the category pairs in the mapping table as needed. Save and validate. On a fresh destination, the documented pair yields three valid rows and one rejected row. Approve that validation to import.
+
+### Why profiles are the default
+
+The original eight labeled cases compared tier selection and explicit abstention:
+
+| Workflow at that measurement | Correct tier decisions | Label-inferred source edits | Model calls | Median workflow |
+|---|---:|---:|---:|---:|
+| Former conditional two-agent default | 3/8 | 5 | 10 | 12.80 s |
+| Mapping Agent + lookup | 3/8 | 5 | 8 | 12.09 s |
+| Upfront profiles + lookup | 7/8 | 1 | 8 | 12.19 s |
+
+The 0.10 s median difference between the two lookup variants is an observation from this small run. Source edits are mismatches against labeled final field assignments. The measured workflows did not involve operators making edits. The release replay reached 8/8 correct tier decisions with zero inferred edits. On five fresh cases it reached 5/5 with zero inferred edits. Both lookup workflows made one model call per file. [Original and follow-up results](docs/evaluation.md#promoting-upfront-profiles).
+
+In the real billing-plan replay, plain lookup selected `plan`, and its preview showed zero affected rows and three unresolved values. The profiled call saw `plan` at 0/3 supported rows and `benefit_code` at 3/3. It chose `benefit_code`, and lookup applied `professional → pro` to one row with zero unresolved values. Each workflow made one model call.
+
 ## How it works
 
 1. Upload a bounded UTF-8 CSV and inspect its original rows.
 2. Retrieve relevant schema/policy chunks from PostgreSQL using local query embeddings.
-3. Generate a typed mapping proposal with retrieved citations. Reviewer is optional.
+3. Profile each source column for canonical tiers and documented aliases before the Mapping Agent call. Apply exact documented alias lookup to the accepted tier source. The operator selects the source when evidence is weak, tied, or disagrees with the model.
 4. Edit source choices, category pairs and date format. Null date format explicitly requests human selection.
 5. Validate the entire file with Python rules and preview original/transformed values.
 6. Approve the exact file, mapping version and validation result, with the valid-rows-only policy.
@@ -36,12 +57,13 @@ The operator maps full_name to name, selects YYYY-MM-DD and confirms the documen
 flowchart LR
     UI[React / TypeScript] --> API[FastAPI]
     API --> Docs[Local embeddings + pgvector retrieval]
-    Docs --> ADK[Google ADK Investigator]
+    API --> Profile[Python profiles candidate source columns]
+    Docs --> ADK[Google ADK Mapping Agent]
+    Profile --> ADK
     ADK <--> Ollama[Ollama / Qwen3 4B]
-    ADK --> Review[Optional Reviewer]
-    Review <--> Ollama
-    ADK --> Human[Operator edits and review]
-    Review --> Human
+    ADK --> Lookup[Python checks source and looks up documented aliases]
+    Lookup --> Preview[Row counts and unresolved values]
+    Preview --> Human[Operator edits and review]
     Human --> Validate[Deterministic full-file validation]
     Validate --> Approval[Exact version-bound approval]
     Approval --> Import[Transactional idempotent import]
@@ -56,7 +78,7 @@ Ollama runs separately on the Windows host. Application services run in Docker. 
 - **Authoritative constraints.** Required/optional status and value rules come from the destination schema. A present optional country must be valid; retrieved prose and model concerns cannot change that rule.
 - **Exact approvals.** A mapping/date edit clears validation and approval. Execution rechecks the approved version and file/mapping/validation hashes.
 - **Retry-safe writes.** Locks, unique normalized emails, conflict rechecks and persisted idempotency results prevent duplicate effects. Existing customers are rejected rather than updated.
-- **Optional Reviewer.** The measured comparison found no final mapping-quality improvement, so Reviewer defaults off. Its advisory concerns remain visible when enabled.
+- **Upfront profiles and deterministic aliases.** The Mapping Agent receives counts for up to 12 ranked columns. Python requires sufficient tier coverage and a clear lead, then looks up exact aliases in the retrieved policy. The preview shows supporting policy, affected rows and unsupported values.
 - **Inspectable traces.** Sanitized application inputs, parsed outputs, guards, validator results and nested timings distinguish model behavior from Python enforcement. [Small real trace example](docs/examples/local-mapping-trace.json).
 
 ## Quick start
@@ -111,7 +133,7 @@ docker compose -f compose.yaml -f compose.local.yaml exec -T api python -m app.c
 
 Run start-ollama.ps1 only when its service is stopped. If ollama is not on PATH, use the installed executable shown in [setup](docs/setup.md). Downloads are approximately 2.5 GB and 274 MB. Local mode uses real embeddings and generation, has no remote/mock fallback and needs no AI API key. It has no external AI API charges; hardware and electricity still have costs. A fresh local-only setup also needs the operator provisioning command above.
 
-Reviewer remains optional through LOCAL_REVIEWER=true and an API container recreation. The [setup guide](docs/setup.md) covers networking, model identity, reindexing and shutdown.
+The upload endpoint defaults to `TIER_MAPPING_STRATEGY=profile_lookup`. For an explicit local comparison, set `TIER_MAPPING_STRATEGY=agent` in the ignored `.env` and recreate the API. Set it back to `profile_lookup` to restore the default. The evaluator selects variants directly. The [setup guide](docs/setup.md) covers networking, model identity and reindexing.
 
 ### Shutdown
 
@@ -152,20 +174,20 @@ npm run test:e2e
 
 PowerShell uses npm.cmd/npx.cmd where execution policy requires it. The browser suite checks that the running API is in mock mode before making suggestions. Real-model tests are explicitly opt-in. CI uses disposable operator credentials, synthetic data and no GPU/private credentials.
 
-Release verification passed 127 backend tests in the local-dependency image, five mock browser workflows, and a separate real local mapping/validation/import capture. A public-files-only clean checkout passed 123 backend tests with four SDK skips, and five browser tests with three opt-in skips. [Verification and evaluation details](docs/evaluation.md).
+Profiling verification passed 159 backend tests in the local-dependency image, five mock browser workflows, and two real Ollama browser checks covering the upload, preview, and import retries. [Verification and evaluation details](docs/evaluation.md).
 
-A frozen, internally authored **16-case synthetic comparison** measured the outputs before operator edits:
+In five historical category cases, documented lookup, a single agent and conditional delegation each found 5/5 expected pairs. Python rejected ten single-agent proposals. [Historical category comparison](docs/evaluation.md#category-preview-comparison).
 
-| Metric | Fixed header baseline | Investigator | Investigator + Reviewer |
-|---|---:|---:|---:|
-| Correct source choices | 74/80 | 78/80 | 78/80 |
-| Exact mappings under the declared rubric | 14/16 | 5/16 | 5/16 |
-| Structured/runtime failures | 0 | 0 | 0 |
-| Median suggestion-workflow time | 0.557 ms | 6.326 s | 9.839 s |
+Reproduce the new source comparison after starting the local stack and ingesting policy:
 
-AI recovered unfamiliar headers but often left ISO formats unresolved, missed an approved alias and failed to abstain on source ambiguity. Reviewer did not improve final quality. Its initial-review precision was 10/10 and recall 10/13, with every detected issue already flagged by Python. These cases are now seen development/regression material. Citation-ID validity does not establish semantic support.
+~~~sh
+docker compose -f compose.yaml -f compose.local.yaml exec -T api python -m app.category_evaluation --suite fresh --variants lookup profile_lookup --output /tmp/tier-original-eight.json
+docker compose -f compose.yaml -f compose.local.yaml exec -T api python -m app.category_evaluation --suite holdout --variants lookup profile_lookup --output /tmp/tier-fresh-five.json
+~~~
 
-A separate fixed four-row, two-agent HTTP profile used Qwen3 4B Q4_K_M, 4096 context and the RTX 4050/16 GB Windows host. After one warm-up, three sequential requests took 8.374, 8.068 and 8.086 seconds, median 8.086 seconds. These are observations on that input and warm state. [Methods, per-case results and limits](docs/evaluation.md).
+The first command uses the eight now-known regression cases. The second uses the five cases added for this release. Add two_agents to --variants to measure explicit conditional delegation.
+
+The earlier Investigator/Reviewer comparison and fixed-input timing profile remain in the [evaluation history](docs/evaluation.md#frozen-16-case-comparison).
 
 ## Scope and limitations
 

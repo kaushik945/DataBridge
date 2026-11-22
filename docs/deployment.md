@@ -39,7 +39,7 @@ Optional GCS archives use generated `uploads/UUID/HASH.csv` object names and cre
 - Verify SQL migration, vector extension, unique constraints, secret mounting, runtime grants and private object writes.
 - Provision/login over HTTPS; inspect Secure/HttpOnly cookies, CSRF/origin handling and logout.
 - Ingest, retrieve and inspect actual vector results and citations; change/delete documents and verify stale-chunk removal and collection isolation.
-- Exercise real Investigator/Reviewer calls, one-revision budget, malformed outputs, ambiguous dates, prompt injection, timeout and credential failures. Confirm manual mapping remains available.
+- Exercise real Mapping Agent and Category Transformation Agent calls, the one-refinement budget, malformed outputs, ambiguous dates, prompt injection, timeout and credential failures. Confirm manual mapping remains available.
 - Configure dated prices and inspect actual ADK token metadata. Run the evaluator in a separate databridge_test database and save Vertex results separately; it resets data and incurs model charges.
 - Repeat browser workflows against the deployed URL and concurrency/rollback checks in an isolated cloud test database.
 

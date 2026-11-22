@@ -58,17 +58,19 @@ test("real local AI followed by human edits, exact approval, retry and report", 
     .fill('{"starter":"basic"}');
   await page.getByLabel("Category pairs", { exact: true }).nth(1).fill("{}");
   await page.getByRole("button", { name: "Save mapping", exact: true }).click();
+  const validationResponse = page.waitForResponse((response) =>
+    response.url().endsWith("/validate"),
+  );
   await page
     .getByRole("button", { name: "Validate all rows", exact: true })
     .click();
+  const validated = await validationResponse;
+  expect(validated.ok()).toBe(true);
+  let upload = await validated.json();
   const session = await (await page.request.get("/api/session")).json();
-  const history = await (await page.request.get("/api/uploads")).json();
-  let upload = history.find(
-    (u: { filename: string }) => u.filename === "local-real.csv",
-  );
   const url = `/api/uploads/${upload.id}`;
   const headers = {
-    Origin: "http://localhost:5173",
+    Origin: process.env.E2E_BASE_URL || "http://localhost:5173",
     "X-CSRF-Token": session.csrf,
   };
   expect(upload.validation.valid).toBe(1);

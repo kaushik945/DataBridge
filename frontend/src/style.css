@@ -813,6 +813,20 @@ tbody tr:last-child td {
   color: #4c8a60;
   font-size: 10px;
 }
+.category-preview {
+  padding: 0 24px 16px;
+  overflow-wrap: anywhere;
+}
+.category-preview ul {
+  padding-left: 18px;
+}
+.category-preview li + li {
+  margin-top: 6px;
+}
+.category-preview .citation {
+  display: inline-flex;
+  margin-left: 8px;
+}
 .validation-stats {
   display: flex;
   align-items: center;

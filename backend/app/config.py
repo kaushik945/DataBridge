@@ -1,3 +1,5 @@
+from typing import Literal
+
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from pydantic import Field
 
@@ -8,6 +10,9 @@ class Settings(BaseSettings):
     )
     database_url: str = "postgresql+psycopg://databridge:local-development-only@localhost:5432/databridge"
     ai_mode: str = "mock"
+    tier_mapping_strategy: Literal["profile_lookup", "lookup", "agent"] = (
+        "profile_lookup"
+    )
     cookie_secure: bool = False
     allowed_origins: str = "http://localhost:5173"
     max_upload_bytes: int = 5 * 1024 * 1024
@@ -30,7 +35,6 @@ class Settings(BaseSettings):
     local_context: int = Field(default=4096, ge=1024, le=4096)
     local_timeout_seconds: int = Field(default=120, ge=5, le=120)
     local_output_tokens: int = Field(default=1400, ge=64, le=2048)
-    local_reviewer: bool = False
 
 
 settings = Settings()

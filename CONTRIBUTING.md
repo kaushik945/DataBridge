@@ -19,7 +19,7 @@ npm run build
 npx playwright install chromium
 ~~~
 
-The base image intentionally skips four optional SDK tests. Build the local override to run all 127 tests; keep AI_MODE=mock on the test process so deterministic tests do not call Ollama. Tests/evaluation must never target the application database. Use npm.cmd/npx.cmd on PowerShell where required.
+The base image intentionally skips four optional SDK tests. Build the local override to run the full suite; keep AI_MODE=mock on the test process so deterministic tests do not call Ollama. Tests/evaluation must never target the application database. Use npm.cmd/npx.cmd on PowerShell where required.
 
 Browser checks use the provisioned account. Enter the password without a shell-history literal:
 
@@ -41,7 +41,7 @@ npm run test:e2e
 unset E2E_PASSWORD E2E_USERNAME
 ~~~
 
-The default browser suite has five mock workflows; two real-model tests and the public-image capture are explicitly skipped. Set E2E_BASE_URL for a different local browser origin. Real local tests require a local-mode stack, ingested local embeddings, E2E_LOCAL=1 and actual credentials. Read the relevant test before opting in; they create synthetic records.
+The default browser suite has five mock workflows; the real-model tests and public-image capture are explicitly skipped. Set E2E_BASE_URL for a different local browser origin. Real local tests require a local-mode stack, ingested local embeddings, the relevant opt-in flag and actual credentials. Set E2E_CATEGORY=1 to run the category browser smoke test. It imports synthetic records into the selected test stack.
 
 For an isolated stack, use docker compose -p databridge-check -f compose.smoke.yaml up --build -d. It uses ports 5273/8100, an independent database volume and no .env/private credential dependency. Use the same project/file arguments for all exec/down commands, E2E_BASE_URL=http://localhost:5273 for browser checks, and the backend origin override shown above. Adding compose.local.yaml enables real local inference for that isolated project. Do not run two smoke projects on the same host ports simultaneously.
 

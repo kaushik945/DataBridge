@@ -13,6 +13,7 @@ application_default_credentials.json
 .tools/
 .local-evidence/
 .npm-cache/
+.cache/
 node_modules/
 dist/
 .venv/
@@ -23,6 +24,7 @@ __pycache__/
 *.tsbuildinfo
 test-results/
 playwright-report/
+**/playwright/.auth/
 coverage/
 htmlcov/
 .coverage*

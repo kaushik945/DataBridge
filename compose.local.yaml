@@ -5,7 +5,6 @@
         INSTALL_LOCAL: 'true'
     environment:
       AI_MODE: local
-      LOCAL_REVIEWER: ${LOCAL_REVIEWER:-false}
       LOCAL_ENDPOINT: http://host.docker.internal:11434
       GOOGLE_GENAI_USE_VERTEXAI: 'false'
       GCS_BUCKET: ''

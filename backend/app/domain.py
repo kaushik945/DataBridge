@@ -166,6 +166,11 @@ def mapping_issues(mapping: Mapping, headers: list[str]) -> list[str]:
     return issues
 
 
+def source_value(row: dict, rule: Rule) -> str:
+    value = row["values"].get(rule.source, "")
+    return value.strip() if rule.trim else value
+
+
 def validate_rows(rows: list[dict], mapping: Mapping, existing: set[str]) -> dict:
     seen: set[str] = set()
     results = []
@@ -173,9 +178,7 @@ def validate_rows(rows: list[dict], mapping: Mapping, existing: set[str]) -> dic
         after: dict = {}
         errors = []
         for r in mapping.rules:
-            value = row["values"].get(r.source, "")
-            if r.trim:
-                value = value.strip()
+            value = source_value(row, r)
             value = r.categories.get(value, value)
             if r.destination == "signup_date":
                 try:

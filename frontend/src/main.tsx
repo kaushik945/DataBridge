@@ -18,12 +18,14 @@ import {
   X,
 } from "lucide-react";
 import type {
+  CategoryPreview,
   Customer,
   Evidence,
   FieldName,
   Mapping,
   Row,
   Rule,
+  TierSourceProfile,
   Upload,
 } from "./types";
 import "./style.css";
@@ -104,6 +106,44 @@ function App() {
     Record<string, boolean>
   >({});
   const invalidMapping = Object.values(invalidCategories).some(Boolean);
+  const previewUploadId = selected?.id;
+  const previewBody =
+    previewUploadId &&
+    !invalidMapping &&
+    mapping.rules.some((rule) => rule.destination === "subscription_tier")
+      ? JSON.stringify(mapping)
+      : null;
+  const previewKey = JSON.stringify([
+    previewUploadId,
+    selected?.version,
+    previewBody,
+  ]);
+  const [preview, setPreview] = useState<{
+    key: string;
+    data?: CategoryPreview;
+    error?: string;
+  }>();
+  useEffect(() => {
+    if (!previewUploadId || !previewBody) return;
+    let current = true;
+    const timer = setTimeout(() => {
+      void api<CategoryPreview>(
+        `/uploads/${previewUploadId}/category-preview`,
+        {
+          method: "POST",
+          body: previewBody,
+        },
+      ).then(
+        (data) => current && setPreview({ key: previewKey, data }),
+        (error) =>
+          current && setPreview({ key: previewKey, error: error.message }),
+      );
+    }, 250);
+    return () => {
+      current = false;
+      clearTimeout(timer);
+    };
+  }, [previewUploadId, previewBody, previewKey]);
   const [rows, setRows] = useState<Row[]>([]),
     [page, setPage] = useState(1),
     [rowTotal, setRowTotal] = useState(0),
@@ -702,12 +742,17 @@ function App() {
                                     disabled={
                                       selected.state === "IMPORTED" || !!busy
                                     }
-                                    onChange={(e) =>
+                                    onChange={(e) => {
+                                      if ((r?.source || "") === e.target.value)
+                                        return;
                                       update(f, {
                                         source: e.target.value,
                                         citations: [],
-                                      })
-                                    }
+                                        ...(f === "subscription_tier"
+                                          ? { categories: {} }
+                                          : {}),
+                                      });
+                                    }}
                                   >
                                     <option value="">Select column…</option>
                                     {selected.headers.map((h) => (
@@ -767,7 +812,7 @@ function App() {
                                       {(f === "subscription_tier" ||
                                         f === "country_code") && (
                                         <CategoryEditor
-                                          key={`${selected.id}-${selected.version}-${f}`}
+                                          key={`${selected.id}-${selected.version}-${f}-${r.source}`}
                                           value={r.categories}
                                           onValidity={(valid) =>
                                             setInvalidCategories((v) => ({
@@ -781,7 +826,9 @@ function App() {
                                           onChange={(categories) =>
                                             update(f, {
                                               categories,
-                                              citations: [],
+                                              ...(f === "country_code"
+                                                ? { citations: [] }
+                                                : {}),
                                             })
                                           }
                                         />
@@ -866,6 +913,42 @@ function App() {
                       </button>
                     </div>
                   </section>
+                  {(previewBody ||
+                    selected.agent_run?.category ||
+                    invalidMapping) && (
+                    <CategoryPanel
+                      preview={
+                        preview?.key === previewKey ? preview.data : undefined
+                      }
+                      message={
+                        invalidMapping
+                          ? "Fix the category pairs to refresh the preview."
+                          : !previewBody
+                            ? "Select a tier source to preview category values."
+                            : preview?.key === previewKey
+                              ? preview.error
+                              : "Calculating preview..."
+                      }
+                      outcome={
+                        selected.agent_run?.mapping_version ===
+                          selected.version && !dirty
+                          ? selected.agent_run?.category?.reason
+                          : undefined
+                      }
+                      profile={selected.agent_run?.category?.source_profile}
+                      sourceReviewReason={
+                        selected.agent_run?.mapping_version ===
+                          selected.version && !dirty
+                          ? selected.agent_run?.category?.source_review_reason
+                          : undefined
+                      }
+                      onEvidence={(id) =>
+                        void action("Opening evidence", async () =>
+                          setEvidence(await api<Evidence>(`/evidence/${id}`)),
+                        )
+                      }
+                    />
+                  )}
                   {selected.agent_run && (
                     <details className="card agent-panel" open>
                       <summary>
@@ -875,9 +958,20 @@ function App() {
                           {selected.agent_run.mode.toUpperCase()}
                         </span>
                         <span className="muted">
-                          {selected.agent_run.review
-                            ? "Investigator → Reviewer → Human"
-                            : "Investigator → Human"}
+                          {selected.agent_run.category
+                            ? selected.agent_run.category.strategy ===
+                              "profile_lookup"
+                              ? "Source profiles → Mapping Agent → Alias lookup"
+                              : selected.agent_run.category.strategy ===
+                                  "lookup"
+                                ? "Mapping Agent → Alias lookup"
+                                : selected.agent_run.category.status ===
+                                    "skipped"
+                                  ? "Mapping Agent → Human"
+                                  : "Mapping Agent → Category transformation → Human"
+                            : selected.agent_run.review
+                              ? "Investigator → Reviewer → Human"
+                              : "Investigator → Human"}
                         </span>
                       </summary>
                       <div className="agent-body">
@@ -1399,6 +1493,153 @@ function ValueList({ values }: { values: Record<string, string | null> }) {
     </dl>
   );
 }
+const categoryOutcomes: Record<string, string> = {
+  no_noncanonical_values: "The selected column needs no alias rules.",
+  no_documented_alias_evidence:
+    "No retrieved alias policy supports the observed noncanonical values.",
+  category_retrieval_failed:
+    "Category policy retrieval failed. Complete the mapping manually.",
+  category_model_failed:
+    "The category model failed. Review the current mapping and complete it manually.",
+  mock_documented_lookup: "Mock mode uses documented alias lookup.",
+};
+const sourceReviewReasons: Record<string, string> = {
+  weak_coverage:
+    "No column has enough supported tier values. Select the tier source manually.",
+  competing_coverage:
+    "Tier coverage is tied or too close across columns. Select the tier source manually.",
+  model_disagreed_with_profile:
+    "The model chose a different source from the strongest tier profile. Confirm the intended column.",
+  model_left_tier_unmapped:
+    "The model left the tier source open. Check the strongest profile before choosing a column.",
+};
+const rejectedCategoryReasons: Record<string, string> = {
+  conflicting_targets: "conflicting targets",
+  source_value_absent: "value absent from the mapped column",
+  target_not_allowed: "target outside the destination schema",
+  pair_not_supported_by_citation: "no citation supports this exact pair",
+};
+
+function CategoryPanel({
+  preview,
+  message,
+  outcome,
+  profile,
+  sourceReviewReason,
+  onEvidence,
+}: {
+  preview?: CategoryPreview;
+  message?: string;
+  outcome?: string | null;
+  profile?: TierSourceProfile;
+  sourceReviewReason?: string;
+  onEvidence: (id: string) => void;
+}) {
+  return (
+    <section className="card">
+      <div className="card-heading">
+        <div>
+          <h2>Category transformation preview</h2>
+          {preview && (
+            <p>
+              {preview.source_column} · {preview.affected_rows} affected rows ·{" "}
+              {preview.recognized_rows} already canonical · {preview.blank_rows}{" "}
+              blank
+            </p>
+          )}
+        </div>
+      </div>
+      <div className="category-preview">
+        {outcome && categoryOutcomes[outcome] && (
+          <p>{categoryOutcomes[outcome]}</p>
+        )}
+        {sourceReviewReason && <p>{sourceReviewReasons[sourceReviewReason]}</p>}
+        {message && <p role="status">{message}</p>}
+        {profile && (
+          <details open={!!sourceReviewReason}>
+            <summary>Tier source coverage</summary>
+            {profile.strong_candidate && (
+              <p>
+                Strongest coverage: <code>{profile.strong_candidate}</code>
+              </p>
+            )}
+            <ul>
+              {profile.candidates.map((column) => (
+                <li key={column.source}>
+                  <code>{column.source}</code> {column.supported_rows}/
+                  {profile.total_rows} supported ({column.canonical_rows}{" "}
+                  canonical, {column.documented_alias_rows} documented aliases)
+                </li>
+              ))}
+            </ul>
+            {profile.truncated && <p>Showing the highest coverage columns.</p>}
+          </details>
+        )}
+        {preview && (
+          <>
+            {preview.rules.length > 0 && (
+              <ul>
+                {preview.rules.map((rule) => (
+                  <li key={rule.before}>
+                    <code>
+                      {rule.before} → {rule.after}
+                    </code>{" "}
+                    · {rule.affected_rows}{" "}
+                    {rule.affected_rows === 1 ? "row" : "rows"}
+                    <button
+                      className="citation"
+                      onClick={() => onEvidence(rule.evidence_id)}
+                    >
+                      <FileText size={12} /> View alias policy
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+            {preview.unresolved_distinct > 0 && (
+              <p>
+                <strong>Unresolved</strong>{" "}
+                {preview.unresolved.map((item, index) => (
+                  <React.Fragment key={index}>
+                    {index > 0 && ", "}
+                    <code>{item.value}</code> ({item.rows})
+                  </React.Fragment>
+                ))}{" "}
+                · {preview.unresolved_rows} rows
+                {preview.unresolved_truncated &&
+                  ` across ${preview.unresolved_distinct} values (showing first ${preview.unresolved.length})`}
+              </p>
+            )}
+            {preview.rejected_rules.length > 0 && (
+              <p>
+                <strong>Excluded from policy preview</strong>{" "}
+                {preview.rejected_rules
+                  .map(
+                    (rule) =>
+                      `${rule.value} (${rejectedCategoryReasons[rule.reason]})`,
+                  )
+                  .join(", ")}
+                . Review manual overrides in full validation.
+              </p>
+            )}
+            {preview.incomplete_validation.length > 0 && (
+              <p>
+                <strong>Import validation incomplete.</strong>{" "}
+                {preview.incomplete_validation.join(". ")}.
+              </p>
+            )}
+            {preview.findings
+              .filter((finding) => finding.scope === "file")
+              .map((finding) => (
+                <p key={finding.id}>{finding.explanation}</p>
+              ))}
+          </>
+        )}
+      </div>
+    </section>
+  );
+}
+
 function CategoryEditor({
   value,
   onChange,

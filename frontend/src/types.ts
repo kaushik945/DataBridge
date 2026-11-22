@@ -13,6 +13,25 @@ export type Rule = {
   citations: string[];
 };
 export type Mapping = { rules: Rule[] };
+export type CategoryPreview = {
+  source_column: string | null;
+  recognized_rows: number;
+  blank_rows: number;
+  rules: {
+    before: string;
+    after: string;
+    evidence_id: string;
+    affected_rows: number;
+  }[];
+  affected_rows: number;
+  unresolved: { value: string; rows: number }[];
+  unresolved_distinct: number;
+  unresolved_rows: number;
+  unresolved_truncated: boolean;
+  rejected_rules: { value: string; reason: string }[];
+  incomplete_validation: string[];
+  findings: { id: string; explanation: string; scope: string }[];
+};
 export type Evidence = {
   id: string;
   title: string;
@@ -20,7 +39,25 @@ export type Evidence = {
   document: string;
   hash: string;
 };
+export type TierSourceProfile = {
+  total_rows: number;
+  candidates: {
+    source: string;
+    canonical_rows: number;
+    documented_alias_rows: number;
+    supported_rows: number;
+  }[];
+  strong_candidate: string | null;
+  truncated: boolean;
+};
 export type AgentRun = {
+  category?: {
+    strategy?: string;
+    status: string;
+    reason: string | null;
+    source_profile?: TierSourceProfile;
+    source_review_reason?: string;
+  };
   mode: string;
   model: string;
   duration_ms: number;

@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
-import { readFileSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 
-test("known country optionality regression with real local review", async ({
+test("known country optionality regression with the real local Mapping Agent", async ({
   page,
 }) => {
   test.skip(
@@ -61,13 +61,16 @@ test("known country optionality regression with real local review", async ({
     agent_run: item.agent_run,
     loaded_after: await (await fetch("http://127.0.0.1:11434/api/ps")).json(),
   };
+  mkdirSync("../.local-evidence", { recursive: true });
   // Save raw observations before assertions so quality failures stay reviewable.
   writeFileSync(
-    "../docs/country-review-reproduction.json",
+    "../.local-evidence/country-category-regression.json",
     JSON.stringify(report, null, 2),
   );
   expect(item.agent_run.mode).toBe("local");
-  expect(item.agent_run.format_version).toBe(2);
+  expect(item.agent_run.format_version).toBe(3);
+  expect(item.agent_run.review).toBeNull();
+  expect(item.agent_run.category.reason).toBe("no_noncanonical_values");
   expect(item.agent_run.status).toBe("needs_attention");
   expect(
     item.mapping.rules.find(
@@ -84,11 +87,15 @@ test("known country optionality regression with real local review", async ({
       (result: { id: string }) => result.id === "rows.country_code",
     ),
   ).toMatchObject({ status: "pass", checked_rows: 4, invalid_rows: 0 });
-  expect(
-    item.agent_run.findings.filter(
-      (finding: { field: string }) => finding.field === "country_code",
-    ),
-  ).toEqual([]);
+  const countryFindings = item.agent_run.findings.filter(
+    (finding: { field: string }) => finding.field === "country_code",
+  );
+  for (const finding of countryFindings) {
+    expect(finding.blocking).toBe(false);
+    expect(finding.explanation).not.toMatch(
+      /(?:must|required to) be (?:blank|empty)/i,
+    );
+  }
   expect(
     item.agent_run.findings
       .filter((finding: { blocking: boolean }) => finding.blocking)
@@ -104,7 +111,7 @@ test("known country optionality regression with real local review", async ({
   });
   const session = await (await page.request.get("/api/session")).json();
   const headers = {
-    Origin: "http://localhost:5173",
+    Origin: process.env.E2E_BASE_URL || "http://localhost:5173",
     "X-CSRF-Token": session.csrf,
   };
   const mapping = structuredClone(item.mapping);
@@ -138,7 +145,7 @@ test("known country optionality regression with real local review", async ({
     ),
   ).toBeTruthy();
   writeFileSync(
-    "../docs/country-review-reproduction.json",
+    "../.local-evidence/country-category-regression.json",
     JSON.stringify(
       {
         ...report,

@@ -25,14 +25,7 @@ The local Compose override installs the optional local dependencies and selects 
 
 Run local-diagnostics, then ingest in the local profile. Nomic v1.5 query/document prefixes, dimensions and model digest form the collection identity. Changed documents are replaced atomically during ingestion; changed model identity uses a separate collection. Re-run ingestion after changing policy files or embedding configuration. Empty/wrong collections cause an explicit failure; local mode never silently falls back to mock or cloud.
 
-Reviewer defaults off. To enable it in PowerShell:
-
-~~~powershell
-$env:LOCAL_REVIEWER = 'true'
-docker compose -f compose.yaml -f compose.local.yaml up -d --no-deps api
-~~~
-
-Set it to false and recreate the API again to restore the default. Remove the shell variable afterward. A fresh process/model may need a warm-up before a timed demonstration. Qwen3 generation uses the GPU when available; Nomic embedding requests explicitly use CPU.
+The default profiles candidate columns before the Mapping Agent call and applies exact documented alias lookup after source selection. The preview shows coverage and unresolved values. For an explicit two-agent comparison, set TIER_MAPPING_STRATEGY=agent in .env and recreate the API. A fresh process/model may need a warm-up before a timed demonstration. Qwen3 generation uses the GPU when available. Nomic embedding requests use CPU.
 
 ## Sample contract
 

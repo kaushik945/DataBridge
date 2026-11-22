@@ -1,0 +1,345 @@
+{
+  "model": "qwen3:4b",
+  "context": 4096,
+  "output_cap": 1400,
+  "rows": [
+    {
+      "case": "unfamiliar",
+      "variant": "lookup",
+      "expected_pairs": {
+        "professional": "pro"
+      },
+      "tier_source": "membership_band",
+      "accepted_pairs": {
+        "professional": "pro"
+      },
+      "correct": 1,
+      "python_rejections": 0,
+      "pair_edits": 0,
+      "source_edits": 1,
+      "affected_rows": 2,
+      "unresolved_rows": 1,
+      "model_calls": 1,
+      "workflow_ms": 12124.538,
+      "category_stage_ms": 614.388,
+      "failure": null
+    },
+    {
+      "case": "unfamiliar",
+      "variant": "single",
+      "expected_pairs": {
+        "professional": "pro"
+      },
+      "tier_source": "membership_band",
+      "accepted_pairs": {
+        "professional": "pro"
+      },
+      "correct": 1,
+      "python_rejections": 1,
+      "pair_edits": 0,
+      "source_edits": 0,
+      "affected_rows": 2,
+      "unresolved_rows": 1,
+      "model_calls": 2,
+      "workflow_ms": 11478.031,
+      "category_stage_ms": null,
+      "failure": null
+    },
+    {
+      "case": "unfamiliar",
+      "variant": "two_agents",
+      "expected_pairs": {
+        "professional": "pro"
+      },
+      "tier_source": "membership_band",
+      "accepted_pairs": {
+        "professional": "pro"
+      },
+      "correct": 1,
+      "python_rejections": 0,
+      "pair_edits": 0,
+      "source_edits": 1,
+      "affected_rows": 2,
+      "unresolved_rows": 1,
+      "model_calls": 2,
+      "workflow_ms": 12524.669,
+      "category_stage_ms": 1838.926,
+      "failure": null
+    },
+    {
+      "case": "three_aliases",
+      "variant": "single",
+      "expected_pairs": {
+        "starter": "basic",
+        "professional": "pro",
+        "business": "enterprise"
+      },
+      "tier_source": "plan",
+      "accepted_pairs": {
+        "business": "enterprise",
+        "professional": "pro",
+        "starter": "basic"
+      },
+      "correct": 3,
+      "python_rejections": 1,
+      "pair_edits": 0,
+      "source_edits": 0,
+      "affected_rows": 3,
+      "unresolved_rows": 0,
+      "model_calls": 2,
+      "workflow_ms": 12709.438,
+      "category_stage_ms": null,
+      "failure": null
+    },
+    {
+      "case": "three_aliases",
+      "variant": "two_agents",
+      "expected_pairs": {
+        "starter": "basic",
+        "professional": "pro",
+        "business": "enterprise"
+      },
+      "tier_source": "plan",
+      "accepted_pairs": {
+        "business": "enterprise",
+        "professional": "pro",
+        "starter": "basic"
+      },
+      "correct": 3,
+      "python_rejections": 0,
+      "pair_edits": 0,
+      "source_edits": 1,
+      "affected_rows": 3,
+      "unresolved_rows": 0,
+      "model_calls": 2,
+      "workflow_ms": 12913.29,
+      "category_stage_ms": 2800.936,
+      "failure": null
+    },
+    {
+      "case": "three_aliases",
+      "variant": "lookup",
+      "expected_pairs": {
+        "starter": "basic",
+        "professional": "pro",
+        "business": "enterprise"
+      },
+      "tier_source": "plan",
+      "accepted_pairs": {
+        "business": "enterprise",
+        "professional": "pro",
+        "starter": "basic"
+      },
+      "correct": 3,
+      "python_rejections": 0,
+      "pair_edits": 0,
+      "source_edits": 1,
+      "affected_rows": 3,
+      "unresolved_rows": 0,
+      "model_calls": 1,
+      "workflow_ms": 10969.95,
+      "category_stage_ms": 362.075,
+      "failure": null
+    },
+    {
+      "case": "case_sensitive",
+      "variant": "two_agents",
+      "expected_pairs": {
+        "starter": "basic"
+      },
+      "tier_source": "package",
+      "accepted_pairs": {
+        "starter": "basic"
+      },
+      "correct": 1,
+      "python_rejections": 0,
+      "pair_edits": 0,
+      "source_edits": 1,
+      "affected_rows": 1,
+      "unresolved_rows": 1,
+      "model_calls": 2,
+      "workflow_ms": 15954.332,
+      "category_stage_ms": 1574.019,
+      "failure": null
+    },
+    {
+      "case": "case_sensitive",
+      "variant": "lookup",
+      "expected_pairs": {
+        "starter": "basic"
+      },
+      "tier_source": "package",
+      "accepted_pairs": {
+        "starter": "basic"
+      },
+      "correct": 1,
+      "python_rejections": 0,
+      "pair_edits": 0,
+      "source_edits": 1,
+      "affected_rows": 1,
+      "unresolved_rows": 1,
+      "model_calls": 1,
+      "workflow_ms": 13913.566,
+      "category_stage_ms": 369.385,
+      "failure": null
+    },
+    {
+      "case": "case_sensitive",
+      "variant": "single",
+      "expected_pairs": {
+        "starter": "basic"
+      },
+      "tier_source": "package",
+      "accepted_pairs": {
+        "starter": "basic"
+      },
+      "correct": 1,
+      "python_rejections": 3,
+      "pair_edits": 0,
+      "source_edits": 0,
+      "affected_rows": 1,
+      "unresolved_rows": 1,
+      "model_calls": 2,
+      "workflow_ms": 13363.505,
+      "category_stage_ms": null,
+      "failure": null
+    },
+    {
+      "case": "canonical",
+      "variant": "lookup",
+      "expected_pairs": {},
+      "tier_source": "membership_band",
+      "accepted_pairs": {},
+      "correct": 0,
+      "python_rejections": 0,
+      "pair_edits": 0,
+      "source_edits": 1,
+      "affected_rows": 0,
+      "unresolved_rows": 0,
+      "model_calls": 1,
+      "workflow_ms": 11090.006,
+      "category_stage_ms": 0.083,
+      "failure": null
+    },
+    {
+      "case": "canonical",
+      "variant": "single",
+      "expected_pairs": {},
+      "tier_source": "membership_band",
+      "accepted_pairs": {},
+      "correct": 0,
+      "python_rejections": 4,
+      "pair_edits": 0,
+      "source_edits": 0,
+      "affected_rows": 0,
+      "unresolved_rows": 0,
+      "model_calls": 1,
+      "workflow_ms": 11753.255,
+      "category_stage_ms": null,
+      "failure": null
+    },
+    {
+      "case": "canonical",
+      "variant": "two_agents",
+      "expected_pairs": {},
+      "tier_source": "membership_band",
+      "accepted_pairs": {},
+      "correct": 0,
+      "python_rejections": 0,
+      "pair_edits": 0,
+      "source_edits": 1,
+      "affected_rows": 0,
+      "unresolved_rows": 0,
+      "model_calls": 1,
+      "workflow_ms": 12318.795,
+      "category_stage_ms": 0.047,
+      "failure": null
+    },
+    {
+      "case": "unsupported",
+      "variant": "single",
+      "expected_pairs": {},
+      "tier_source": "plan",
+      "accepted_pairs": {},
+      "correct": 0,
+      "python_rejections": 1,
+      "pair_edits": 0,
+      "source_edits": 0,
+      "affected_rows": 0,
+      "unresolved_rows": 2,
+      "model_calls": 1,
+      "workflow_ms": 8640.923,
+      "category_stage_ms": null,
+      "failure": null
+    },
+    {
+      "case": "unsupported",
+      "variant": "two_agents",
+      "expected_pairs": {},
+      "tier_source": "plan",
+      "accepted_pairs": {},
+      "correct": 0,
+      "python_rejections": 0,
+      "pair_edits": 0,
+      "source_edits": 1,
+      "affected_rows": 0,
+      "unresolved_rows": 2,
+      "model_calls": 1,
+      "workflow_ms": 11676.695,
+      "category_stage_ms": 648.259,
+      "failure": null
+    },
+    {
+      "case": "unsupported",
+      "variant": "lookup",
+      "expected_pairs": {},
+      "tier_source": "plan",
+      "accepted_pairs": {},
+      "correct": 0,
+      "python_rejections": 0,
+      "pair_edits": 0,
+      "source_edits": 1,
+      "affected_rows": 0,
+      "unresolved_rows": 2,
+      "model_calls": 1,
+      "workflow_ms": 11897.396,
+      "category_stage_ms": 640.522,
+      "failure": null
+    }
+  ],
+  "summary": {
+    "lookup": {
+      "correct": 5,
+      "python_rejections": 0,
+      "pair_edits": 0,
+      "source_edits": 5,
+      "model_calls": 5,
+      "expected": 5,
+      "failures": 0,
+      "median_workflow_ms": 11897.396,
+      "total_workflow_ms": 59995.456
+    },
+    "single": {
+      "correct": 5,
+      "python_rejections": 10,
+      "pair_edits": 0,
+      "source_edits": 0,
+      "model_calls": 8,
+      "expected": 5,
+      "failures": 0,
+      "median_workflow_ms": 11753.255,
+      "total_workflow_ms": 57945.152
+    },
+    "two_agents": {
+      "correct": 5,
+      "python_rejections": 0,
+      "pair_edits": 0,
+      "source_edits": 5,
+      "model_calls": 8,
+      "expected": 5,
+      "failures": 0,
+      "median_workflow_ms": 12524.669,
+      "total_workflow_ms": 65387.781
+    }
+  }
+}

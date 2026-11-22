@@ -8,3 +8,8 @@ playwright-report
 .env.*
 .cache
 coverage
+playwright/.auth
+.local-operator.json
+.local-evidence
+uploads
+backups

@@ -8,7 +8,7 @@
 
 **Approval describes exact state.** File, mapping version/hash and validation hash are bound into approval. Edits/revalidation invalidate it. Imports lock and recheck state, use database uniqueness and persist idempotency outcomes atomically.
 
-**Reviewer is optional.** The measured 16-case comparison found no final mapping-quality gain. Reviewer can surface scoped advisory concerns, but Python decides blockers and whether a repairable deterministic issue warrants the bounded revision. Requests for human date clarification do not trigger automatic guessing/revisions.
+**Profile sources up front and look up documented aliases.** The Mapping Agent receives bounded full-file coverage counts. Python defers weak, tied or contradictory source proposals and applies documented aliases by exact lookup. The conditional category agent remains available for comparison. Python checks the actual policy and calculates the preview. The operator resolves dates and makes the import decision.
 
 **Keep retrieval small and inspectable.** Exact pgvector search is sufficient for the shipped corpus. Model/prefix/dimension identity isolates collections. Changed documents are replaced during ingestion. Citation existence is checked separately from semantic support.
 

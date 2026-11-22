@@ -1,0 +1,2090 @@
+{
+  "model": "qwen3:4b",
+  "suite": "fresh",
+  "context": 4096,
+  "output_cap": 1400,
+  "temperature": 0,
+  "thinking": false,
+  "rows": [
+    {
+      "case": "billing_plan_decoy",
+      "variant": "lookup",
+      "expected_pairs": {
+        "professional": "pro"
+      },
+      "tier_source": "plan",
+      "accepted_pairs": {},
+      "correct": 0,
+      "python_rejections": 0,
+      "mapping_output_rejections": 0,
+      "pair_edits": 1,
+      "source_edits": 1,
+      "tier_source_correct": false,
+      "expected_sources": {
+        "name": "name",
+        "email": "email",
+        "signup_date": "joined",
+        "subscription_tier": "benefit_code",
+        "country_code": "country"
+      },
+      "initial_sources": {
+        "name": "name",
+        "email": "email",
+        "signup_date": "joined",
+        "subscription_tier": "plan",
+        "country_code": "country"
+      },
+      "final_sources": {
+        "name": "name",
+        "email": "email",
+        "signup_date": "joined",
+        "subscription_tier": "plan",
+        "country_code": "country"
+      },
+      "source_differences": [
+        {
+          "destination": "subscription_tier",
+          "expected": "benefit_code",
+          "selected": "plan",
+          "reason": "wrong_source"
+        }
+      ],
+      "preview_feedback": [],
+      "alias_rejection_audit": [],
+      "category_outcome": {
+        "strategy": "lookup",
+        "status": "skipped",
+        "source_column": "plan",
+        "refinements": 0,
+        "rejected_proposals": 0,
+        "profile": {
+          "source_column": "plan",
+          "allowed_values": [
+            "basic",
+            "pro",
+            "enterprise"
+          ],
+          "recognized_rows": 0,
+          "blank_rows": 0,
+          "noncanonical_distinct": 3,
+          "noncanonical_rows": 3,
+          "eligible_values": [],
+          "truncated": false,
+          "omitted_distinct": 3
+        },
+        "reason": "no_documented_alias_evidence"
+      },
+      "calls": [
+        {
+          "agent": "MappingAgent",
+          "duration_ms": 13003,
+          "mapping_sources": {
+            "name": "name",
+            "email": "email",
+            "signup_date": "joined",
+            "subscription_tier": "plan",
+            "country_code": "country"
+          },
+          "category_output": null,
+          "candidate_profiles": null,
+          "preview_feedback": null,
+          "error_type": null
+        }
+      ],
+      "affected_rows": 0,
+      "unresolved_rows": 3,
+      "model_calls": 1,
+      "workflow_ms": 14273.139,
+      "category_stage_ms": 617.601,
+      "failure": null
+    },
+    {
+      "case": "billing_plan_decoy",
+      "variant": "profile_lookup",
+      "expected_pairs": {
+        "professional": "pro"
+      },
+      "tier_source": "benefit_code",
+      "accepted_pairs": {
+        "professional": "pro"
+      },
+      "correct": 1,
+      "python_rejections": 0,
+      "mapping_output_rejections": 0,
+      "pair_edits": 0,
+      "source_edits": 0,
+      "tier_source_correct": true,
+      "expected_sources": {
+        "name": "name",
+        "email": "email",
+        "signup_date": "joined",
+        "subscription_tier": "benefit_code",
+        "country_code": "country"
+      },
+      "initial_sources": {
+        "name": "name",
+        "email": "email",
+        "signup_date": "joined",
+        "subscription_tier": "benefit_code",
+        "country_code": "country"
+      },
+      "final_sources": {
+        "name": "name",
+        "email": "email",
+        "signup_date": "joined",
+        "subscription_tier": "benefit_code",
+        "country_code": "country"
+      },
+      "source_differences": [],
+      "preview_feedback": [],
+      "alias_rejection_audit": [],
+      "category_outcome": {
+        "strategy": "profile_lookup",
+        "status": "proposed",
+        "source_column": "benefit_code",
+        "refinements": 0,
+        "rejected_proposals": 0,
+        "profile": {
+          "source_column": "benefit_code",
+          "allowed_values": [
+            "basic",
+            "pro",
+            "enterprise"
+          ],
+          "recognized_rows": 2,
+          "blank_rows": 0,
+          "noncanonical_distinct": 1,
+          "noncanonical_rows": 1,
+          "eligible_values": [
+            {
+              "value": "professional",
+              "rows": 1
+            }
+          ],
+          "truncated": false,
+          "omitted_distinct": 0
+        },
+        "reason": null,
+        "source_profile": {
+          "total_rows": 3,
+          "candidates": [
+            {
+              "source": "benefit_code",
+              "canonical_rows": 2,
+              "documented_alias_rows": 1,
+              "supported_rows": 3
+            },
+            {
+              "source": "name",
+              "canonical_rows": 0,
+              "documented_alias_rows": 0,
+              "supported_rows": 0
+            },
+            {
+              "source": "email",
+              "canonical_rows": 0,
+              "documented_alias_rows": 0,
+              "supported_rows": 0
+            },
+            {
+              "source": "joined",
+              "canonical_rows": 0,
+              "documented_alias_rows": 0,
+              "supported_rows": 0
+            },
+            {
+              "source": "country",
+              "canonical_rows": 0,
+              "documented_alias_rows": 0,
+              "supported_rows": 0
+            },
+            {
+              "source": "plan",
+              "canonical_rows": 0,
+              "documented_alias_rows": 0,
+              "supported_rows": 0
+            }
+          ],
+          "truncated": false,
+          "strong_candidate": "benefit_code",
+          "abstain_reason": null
+        }
+      },
+      "calls": [
+        {
+          "agent": "MappingAgent",
+          "duration_ms": 12955,
+          "mapping_sources": {
+            "name": "name",
+            "email": "email",
+            "signup_date": "joined",
+            "subscription_tier": "benefit_code",
+            "country_code": "country"
+          },
+          "category_output": null,
+          "candidate_profiles": {
+            "total_rows": 3,
+            "candidates": [
+              {
+                "source": "benefit_code",
+                "canonical_rows": 2,
+                "documented_alias_rows": 1,
+                "supported_rows": 3
+              },
+              {
+                "source": "name",
+                "canonical_rows": 0,
+                "documented_alias_rows": 0,
+                "supported_rows": 0
+              },
+              {
+                "source": "email",
+                "canonical_rows": 0,
+                "documented_alias_rows": 0,
+                "supported_rows": 0
+              },
+              {
+                "source": "joined",
+                "canonical_rows": 0,
+                "documented_alias_rows": 0,
+                "supported_rows": 0
+              },
+              {
+                "source": "country",
+                "canonical_rows": 0,
+                "documented_alias_rows": 0,
+                "supported_rows": 0
+              },
+              {
+                "source": "plan",
+                "canonical_rows": 0,
+                "documented_alias_rows": 0,
+                "supported_rows": 0
+              }
+            ],
+            "truncated": false,
+            "strong_candidate": "benefit_code",
+            "abstain_reason": null
+          },
+          "preview_feedback": null,
+          "error_type": null
+        }
+      ],
+      "affected_rows": 1,
+      "unresolved_rows": 0,
+      "model_calls": 1,
+      "workflow_ms": 13684.89,
+      "category_stage_ms": 355.967,
+      "failure": null
+    },
+    {
+      "case": "misleading_band",
+      "variant": "profile_lookup",
+      "expected_pairs": {
+        "starter": "basic",
+        "professional": "pro",
+        "business": "enterprise"
+      },
+      "tier_source": "bundle_level",
+      "accepted_pairs": {
+        "business": "enterprise",
+        "professional": "pro",
+        "starter": "basic"
+      },
+      "correct": 3,
+      "python_rejections": 0,
+      "mapping_output_rejections": 0,
+      "pair_edits": 0,
+      "source_edits": 0,
+      "tier_source_correct": true,
+      "expected_sources": {
+        "name": "name",
+        "email": "email",
+        "signup_date": "joined",
+        "subscription_tier": "bundle_level",
+        "country_code": "country"
+      },
+      "initial_sources": {
+        "name": "name",
+        "email": "email",
+        "signup_date": "joined",
+        "subscription_tier": "bundle_level",
+        "country_code": "country"
+      },
+      "final_sources": {
+        "name": "name",
+        "email": "email",
+        "signup_date": "joined",
+        "subscription_tier": "bundle_level",
+        "country_code": "country"
+      },
+      "source_differences": [],
+      "preview_feedback": [],
+      "alias_rejection_audit": [],
+      "category_outcome": {
+        "strategy": "profile_lookup",
+        "status": "proposed",
+        "source_column": "bundle_level",
+        "refinements": 0,
+        "rejected_proposals": 0,
+        "profile": {
+          "source_column": "bundle_level",
+          "allowed_values": [
+            "basic",
+            "pro",
+            "enterprise"
+          ],
+          "recognized_rows": 0,
+          "blank_rows": 0,
+          "noncanonical_distinct": 3,
+          "noncanonical_rows": 3,
+          "eligible_values": [
+            {
+              "value": "business",
+              "rows": 1
+            },
+            {
+              "value": "professional",
+              "rows": 1
+            },
+            {
+              "value": "starter",
+              "rows": 1
+            }
+          ],
+          "truncated": false,
+          "omitted_distinct": 0
+        },
+        "reason": null,
+        "source_profile": {
+          "total_rows": 3,
+          "candidates": [
+            {
+              "source": "bundle_level",
+              "canonical_rows": 0,
+              "documented_alias_rows": 3,
+              "supported_rows": 3
+            },
+            {
+              "source": "name",
+              "canonical_rows": 0,
+              "documented_alias_rows": 0,
+              "supported_rows": 0
+            },
+            {
+              "source": "email",
+              "canonical_rows": 0,
+              "documented_alias_rows": 0,
+              "supported_rows": 0
+            },
+            {
+              "source": "joined",
+              "canonical_rows": 0,
+              "documented_alias_rows": 0,
+              "supported_rows": 0
+            },
+            {
+              "source": "country",
+              "canonical_rows": 0,
+              "documented_alias_rows": 0,
+              "supported_rows": 0
+            },
+            {
+              "source": "membership_band",
+              "canonical_rows": 0,
+              "documented_alias_rows": 0,
+              "supported_rows": 0
+            }
+          ],
+          "truncated": false,
+          "strong_candidate": "bundle_level",
+          "abstain_reason": null
+        }
+      },
+      "calls": [
+        {
+          "agent": "MappingAgent",
+          "duration_ms": 10806,
+          "mapping_sources": {
+            "name": "name",
+            "email": "email",
+            "signup_date": "joined",
+            "subscription_tier": "bundle_level",
+            "country_code": "country"
+          },
+          "category_output": null,
+          "candidate_profiles": {
+            "total_rows": 3,
+            "candidates": [
+              {
+                "source": "bundle_level",
+                "canonical_rows": 0,
+                "documented_alias_rows": 3,
+                "supported_rows": 3
+              },
+              {
+                "source": "name",
+                "canonical_rows": 0,
+                "documented_alias_rows": 0,
+                "supported_rows": 0
+              },
+              {
+                "source": "email",
+                "canonical_rows": 0,
+                "documented_alias_rows": 0,
+                "supported_rows": 0
+              },
+              {
+                "source": "joined",
+                "canonical_rows": 0,
+                "documented_alias_rows": 0,
+                "supported_rows": 0
+              },
+              {
+                "source": "country",
+                "canonical_rows": 0,
+                "documented_alias_rows": 0,
+                "supported_rows": 0
+              },
+              {
+                "source": "membership_band",
+                "canonical_rows": 0,
+                "documented_alias_rows": 0,
+                "supported_rows": 0
+              }
+            ],
+            "truncated": false,
+            "strong_candidate": "bundle_level",
+            "abstain_reason": null
+          },
+          "preview_feedback": null,
+          "error_type": null
+        }
+      ],
+      "affected_rows": 3,
+      "unresolved_rows": 0,
+      "model_calls": 1,
+      "workflow_ms": 11544.429,
+      "category_stage_ms": 352.687,
+      "failure": null
+    },
+    {
+      "case": "misleading_band",
+      "variant": "lookup",
+      "expected_pairs": {
+        "starter": "basic",
+        "professional": "pro",
+        "business": "enterprise"
+      },
+      "tier_source": "membership_band",
+      "accepted_pairs": {},
+      "correct": 0,
+      "python_rejections": 0,
+      "mapping_output_rejections": 0,
+      "pair_edits": 3,
+      "source_edits": 1,
+      "tier_source_correct": false,
+      "expected_sources": {
+        "name": "name",
+        "email": "email",
+        "signup_date": "joined",
+        "subscription_tier": "bundle_level",
+        "country_code": "country"
+      },
+      "initial_sources": {
+        "name": "name",
+        "email": "email",
+        "signup_date": "joined",
+        "subscription_tier": "membership_band",
+        "country_code": "country"
+      },
+      "final_sources": {
+        "name": "name",
+        "email": "email",
+        "signup_date": "joined",
+        "subscription_tier": "membership_band",
+        "country_code": "country"
+      },
+      "source_differences": [
+        {
+          "destination": "subscription_tier",
+          "expected": "bundle_level",
+          "selected": "membership_band",
+          "reason": "wrong_source"
+        }
+      ],
+      "preview_feedback": [],
+      "alias_rejection_audit": [],
+      "category_outcome": {
+        "strategy": "lookup",
+        "status": "skipped",
+        "source_column": "membership_band",
+        "refinements": 0,
+        "rejected_proposals": 0,
+        "profile": {
+          "source_column": "membership_band",
+          "allowed_values": [
+            "basic",
+            "pro",
+            "enterprise"
+          ],
+          "recognized_rows": 0,
+          "blank_rows": 0,
+          "noncanonical_distinct": 3,
+          "noncanonical_rows": 3,
+          "eligible_values": [],
+          "truncated": false,
+          "omitted_distinct": 3
+        },
+        "reason": "no_documented_alias_evidence"
+      },
+      "calls": [
+        {
+          "agent": "MappingAgent",
+          "duration_ms": 12924,
+          "mapping_sources": {
+            "name": "name",
+            "email": "email",
+            "signup_date": "joined",
+            "subscription_tier": "membership_band",
+            "country_code": "country"
+          },
+          "category_output": null,
+          "candidate_profiles": null,
+          "preview_feedback": null,
+          "error_type": null
+        }
+      ],
+      "affected_rows": 0,
+      "unresolved_rows": 3,
+      "model_calls": 1,
+      "workflow_ms": 13649.185,
+      "category_stage_ms": 355.687,
+      "failure": null
+    },
+    {
+      "case": "competing_clear",
+      "variant": "lookup",
+      "expected_pairs": {
+        "professional": "pro",
+        "starter": "basic"
+      },
+      "tier_source": null,
+      "accepted_pairs": {},
+      "correct": 0,
+      "python_rejections": 0,
+      "mapping_output_rejections": 0,
+      "pair_edits": 2,
+      "source_edits": 1,
+      "tier_source_correct": false,
+      "expected_sources": {
+        "name": "name",
+        "email": "email",
+        "signup_date": "joined",
+        "subscription_tier": "plan",
+        "country_code": "country"
+      },
+      "initial_sources": {
+        "name": "name",
+        "email": "email",
+        "signup_date": "joined",
+        "subscription_tier": "tier",
+        "country_code": "country"
+      },
+      "final_sources": {
+        "name": "name",
+        "email": "email",
+        "signup_date": "joined",
+        "subscription_tier": null,
+        "country_code": "country"
+      },
+      "source_differences": [
+        {
+          "destination": "subscription_tier",
+          "expected": "plan",
+          "selected": null,
+          "reason": "missing_assignment"
+        }
+      ],
+      "preview_feedback": [],
+      "alias_rejection_audit": [],
+      "category_outcome": {
+        "strategy": "lookup",
+        "status": "skipped",
+        "source_column": null,
+        "refinements": 0,
+        "rejected_proposals": 0,
+        "reason": "no_category_source"
+      },
+      "calls": [
+        {
+          "agent": "MappingAgent",
+          "duration_ms": 11859,
+          "mapping_sources": {
+            "name": "name",
+            "email": "email",
+            "signup_date": "joined",
+            "subscription_tier": "tier",
+            "country_code": "country"
+          },
+          "category_output": null,
+          "candidate_profiles": null,
+          "preview_feedback": null,
+          "error_type": null
+        }
+      ],
+      "affected_rows": 0,
+      "unresolved_rows": 0,
+      "model_calls": 1,
+      "workflow_ms": 12231.629,
+      "category_stage_ms": 0.005,
+      "failure": null
+    },
+    {
+      "case": "competing_clear",
+      "variant": "profile_lookup",
+      "expected_pairs": {
+        "professional": "pro",
+        "starter": "basic"
+      },
+      "tier_source": "plan",
+      "accepted_pairs": {
+        "professional": "pro",
+        "starter": "basic"
+      },
+      "correct": 2,
+      "python_rejections": 0,
+      "mapping_output_rejections": 0,
+      "pair_edits": 0,
+      "source_edits": 0,
+      "tier_source_correct": true,
+      "expected_sources": {
+        "name": "name",
+        "email": "email",
+        "signup_date": "joined",
+        "subscription_tier": "plan",
+        "country_code": "country"
+      },
+      "initial_sources": {
+        "name": "name",
+        "email": "email",
+        "signup_date": "joined",
+        "subscription_tier": "plan",
+        "country_code": "country"
+      },
+      "final_sources": {
+        "name": "name",
+        "email": "email",
+        "signup_date": "joined",
+        "subscription_tier": "plan",
+        "country_code": "country"
+      },
+      "source_differences": [],
+      "preview_feedback": [],
+      "alias_rejection_audit": [],
+      "category_outcome": {
+        "strategy": "profile_lookup",
+        "status": "proposed",
+        "source_column": "plan",
+        "refinements": 0,
+        "rejected_proposals": 0,
+        "profile": {
+          "source_column": "plan",
+          "allowed_values": [
+            "basic",
+            "pro",
+            "enterprise"
+          ],
+          "recognized_rows": 2,
+          "blank_rows": 0,
+          "noncanonical_distinct": 2,
+          "noncanonical_rows": 2,
+          "eligible_values": [
+            {
+              "value": "professional",
+              "rows": 1
+            },
+            {
+              "value": "starter",
+              "rows": 1
+            }
+          ],
+          "truncated": false,
+          "omitted_distinct": 0
+        },
+        "reason": null,
+        "source_profile": {
+          "total_rows": 4,
+          "candidates": [
+            {
+              "source": "plan",
+              "canonical_rows": 2,
+              "documented_alias_rows": 2,
+              "supported_rows": 4
+            },
+            {
+              "source": "tier",
+              "canonical_rows": 1,
+              "documented_alias_rows": 0,
+              "supported_rows": 1
+            },
+            {
+              "source": "name",
+              "canonical_rows": 0,
+              "documented_alias_rows": 0,
+              "supported_rows": 0
+            },
+            {
+              "source": "email",
+              "canonical_rows": 0,
+              "documented_alias_rows": 0,
+              "supported_rows": 0
+            },
+            {
+              "source": "joined",
+              "canonical_rows": 0,
+              "documented_alias_rows": 0,
+              "supported_rows": 0
+            },
+            {
+              "source": "country",
+              "canonical_rows": 0,
+              "documented_alias_rows": 0,
+              "supported_rows": 0
+            }
+          ],
+          "truncated": false,
+          "strong_candidate": "plan",
+          "abstain_reason": null
+        }
+      },
+      "calls": [
+        {
+          "agent": "MappingAgent",
+          "duration_ms": 12048,
+          "mapping_sources": {
+            "name": "name",
+            "email": "email",
+            "signup_date": "joined",
+            "subscription_tier": "plan",
+            "country_code": "country"
+          },
+          "category_output": null,
+          "candidate_profiles": {
+            "total_rows": 4,
+            "candidates": [
+              {
+                "source": "plan",
+                "canonical_rows": 2,
+                "documented_alias_rows": 2,
+                "supported_rows": 4
+              },
+              {
+                "source": "tier",
+                "canonical_rows": 1,
+                "documented_alias_rows": 0,
+                "supported_rows": 1
+              },
+              {
+                "source": "name",
+                "canonical_rows": 0,
+                "documented_alias_rows": 0,
+                "supported_rows": 0
+              },
+              {
+                "source": "email",
+                "canonical_rows": 0,
+                "documented_alias_rows": 0,
+                "supported_rows": 0
+              },
+              {
+                "source": "joined",
+                "canonical_rows": 0,
+                "documented_alias_rows": 0,
+                "supported_rows": 0
+              },
+              {
+                "source": "country",
+                "canonical_rows": 0,
+                "documented_alias_rows": 0,
+                "supported_rows": 0
+              }
+            ],
+            "truncated": false,
+            "strong_candidate": "plan",
+            "abstain_reason": null
+          },
+          "preview_feedback": null,
+          "error_type": null
+        }
+      ],
+      "affected_rows": 2,
+      "unresolved_rows": 0,
+      "model_calls": 1,
+      "workflow_ms": 12770.566,
+      "category_stage_ms": 362.369,
+      "failure": null
+    },
+    {
+      "case": "competing_close",
+      "variant": "profile_lookup",
+      "expected_pairs": {},
+      "tier_source": null,
+      "accepted_pairs": {},
+      "correct": 0,
+      "python_rejections": 0,
+      "mapping_output_rejections": 0,
+      "pair_edits": 0,
+      "source_edits": 0,
+      "tier_source_correct": true,
+      "expected_sources": {
+        "name": "name",
+        "email": "email",
+        "signup_date": "joined",
+        "subscription_tier": null,
+        "country_code": "country"
+      },
+      "initial_sources": {
+        "name": "name",
+        "email": "email",
+        "signup_date": "joined",
+        "subscription_tier": "tier",
+        "country_code": "country"
+      },
+      "final_sources": {
+        "name": "name",
+        "email": "email",
+        "signup_date": "joined",
+        "subscription_tier": null,
+        "country_code": "country"
+      },
+      "source_differences": [],
+      "preview_feedback": [],
+      "alias_rejection_audit": [],
+      "category_outcome": {
+        "strategy": "profile_lookup",
+        "status": "skipped",
+        "source_column": null,
+        "refinements": 0,
+        "rejected_proposals": 0,
+        "reason": "no_category_source",
+        "source_profile": {
+          "total_rows": 5,
+          "candidates": [
+            {
+              "source": "membership_band",
+              "canonical_rows": 5,
+              "documented_alias_rows": 0,
+              "supported_rows": 5
+            },
+            {
+              "source": "tier",
+              "canonical_rows": 3,
+              "documented_alias_rows": 1,
+              "supported_rows": 4
+            },
+            {
+              "source": "name",
+              "canonical_rows": 0,
+              "documented_alias_rows": 0,
+              "supported_rows": 0
+            },
+            {
+              "source": "email",
+              "canonical_rows": 0,
+              "documented_alias_rows": 0,
+              "supported_rows": 0
+            },
+            {
+              "source": "joined",
+              "canonical_rows": 0,
+              "documented_alias_rows": 0,
+              "supported_rows": 0
+            },
+            {
+              "source": "country",
+              "canonical_rows": 0,
+              "documented_alias_rows": 0,
+              "supported_rows": 0
+            }
+          ],
+          "truncated": false,
+          "strong_candidate": null,
+          "abstain_reason": "competing_coverage"
+        },
+        "source_review_reason": "competing_coverage"
+      },
+      "calls": [
+        {
+          "agent": "MappingAgent",
+          "duration_ms": 10199,
+          "mapping_sources": {
+            "name": "name",
+            "email": "email",
+            "signup_date": "joined",
+            "subscription_tier": "tier",
+            "country_code": "country"
+          },
+          "category_output": null,
+          "candidate_profiles": {
+            "total_rows": 5,
+            "candidates": [
+              {
+                "source": "membership_band",
+                "canonical_rows": 5,
+                "documented_alias_rows": 0,
+                "supported_rows": 5
+              },
+              {
+                "source": "tier",
+                "canonical_rows": 3,
+                "documented_alias_rows": 1,
+                "supported_rows": 4
+              },
+              {
+                "source": "name",
+                "canonical_rows": 0,
+                "documented_alias_rows": 0,
+                "supported_rows": 0
+              },
+              {
+                "source": "email",
+                "canonical_rows": 0,
+                "documented_alias_rows": 0,
+                "supported_rows": 0
+              },
+              {
+                "source": "joined",
+                "canonical_rows": 0,
+                "documented_alias_rows": 0,
+                "supported_rows": 0
+              },
+              {
+                "source": "country",
+                "canonical_rows": 0,
+                "documented_alias_rows": 0,
+                "supported_rows": 0
+              }
+            ],
+            "truncated": false,
+            "strong_candidate": null,
+            "abstain_reason": "competing_coverage"
+          },
+          "preview_feedback": null,
+          "error_type": null
+        }
+      ],
+      "affected_rows": 0,
+      "unresolved_rows": 0,
+      "model_calls": 1,
+      "workflow_ms": 10587.126,
+      "category_stage_ms": 0.006,
+      "failure": null
+    },
+    {
+      "case": "competing_close",
+      "variant": "lookup",
+      "expected_pairs": {},
+      "tier_source": "tier",
+      "accepted_pairs": {
+        "starter": "basic"
+      },
+      "correct": 0,
+      "python_rejections": 0,
+      "mapping_output_rejections": 0,
+      "pair_edits": 0,
+      "source_edits": 1,
+      "tier_source_correct": false,
+      "expected_sources": {
+        "name": "name",
+        "email": "email",
+        "signup_date": "joined",
+        "subscription_tier": null,
+        "country_code": "country"
+      },
+      "initial_sources": {
+        "name": "name",
+        "email": "email",
+        "signup_date": "joined",
+        "subscription_tier": "tier",
+        "country_code": "country"
+      },
+      "final_sources": {
+        "name": "name",
+        "email": "email",
+        "signup_date": "joined",
+        "subscription_tier": "tier",
+        "country_code": "country"
+      },
+      "source_differences": [
+        {
+          "destination": "subscription_tier",
+          "expected": null,
+          "selected": "tier",
+          "reason": "unexpected_assignment"
+        }
+      ],
+      "preview_feedback": [],
+      "alias_rejection_audit": [],
+      "category_outcome": {
+        "strategy": "lookup",
+        "status": "proposed",
+        "source_column": "tier",
+        "refinements": 0,
+        "rejected_proposals": 0,
+        "profile": {
+          "source_column": "tier",
+          "allowed_values": [
+            "basic",
+            "pro",
+            "enterprise"
+          ],
+          "recognized_rows": 3,
+          "blank_rows": 0,
+          "noncanonical_distinct": 2,
+          "noncanonical_rows": 2,
+          "eligible_values": [
+            {
+              "value": "starter",
+              "rows": 1
+            }
+          ],
+          "truncated": false,
+          "omitted_distinct": 1
+        },
+        "reason": null
+      },
+      "calls": [
+        {
+          "agent": "MappingAgent",
+          "duration_ms": 10833,
+          "mapping_sources": {
+            "name": "name",
+            "email": "email",
+            "signup_date": "joined",
+            "subscription_tier": "tier",
+            "country_code": "country"
+          },
+          "category_output": null,
+          "candidate_profiles": null,
+          "preview_feedback": null,
+          "error_type": null
+        }
+      ],
+      "affected_rows": 1,
+      "unresolved_rows": 1,
+      "model_calls": 1,
+      "workflow_ms": 11565.156,
+      "category_stage_ms": 363.039,
+      "failure": null
+    },
+    {
+      "case": "competing_equal",
+      "variant": "lookup",
+      "expected_pairs": {},
+      "tier_source": null,
+      "accepted_pairs": {},
+      "correct": 0,
+      "python_rejections": 0,
+      "mapping_output_rejections": 0,
+      "pair_edits": 0,
+      "source_edits": 0,
+      "tier_source_correct": true,
+      "expected_sources": {
+        "name": "name",
+        "email": "email",
+        "signup_date": "joined",
+        "subscription_tier": null,
+        "country_code": "country"
+      },
+      "initial_sources": {
+        "name": "name",
+        "email": "email",
+        "signup_date": "joined",
+        "subscription_tier": "tier",
+        "country_code": "country"
+      },
+      "final_sources": {
+        "name": "name",
+        "email": "email",
+        "signup_date": "joined",
+        "subscription_tier": null,
+        "country_code": "country"
+      },
+      "source_differences": [],
+      "preview_feedback": [],
+      "alias_rejection_audit": [],
+      "category_outcome": {
+        "strategy": "lookup",
+        "status": "skipped",
+        "source_column": null,
+        "refinements": 0,
+        "rejected_proposals": 0,
+        "reason": "no_category_source"
+      },
+      "calls": [
+        {
+          "agent": "MappingAgent",
+          "duration_ms": 11876,
+          "mapping_sources": {
+            "name": "name",
+            "email": "email",
+            "signup_date": "joined",
+            "subscription_tier": "tier",
+            "country_code": "country"
+          },
+          "category_output": null,
+          "candidate_profiles": null,
+          "preview_feedback": null,
+          "error_type": null
+        }
+      ],
+      "affected_rows": 0,
+      "unresolved_rows": 0,
+      "model_calls": 1,
+      "workflow_ms": 12250.465,
+      "category_stage_ms": 0.025,
+      "failure": null
+    },
+    {
+      "case": "competing_equal",
+      "variant": "profile_lookup",
+      "expected_pairs": {},
+      "tier_source": null,
+      "accepted_pairs": {},
+      "correct": 0,
+      "python_rejections": 0,
+      "mapping_output_rejections": 0,
+      "pair_edits": 0,
+      "source_edits": 0,
+      "tier_source_correct": true,
+      "expected_sources": {
+        "name": "name",
+        "email": "email",
+        "signup_date": "joined",
+        "subscription_tier": null,
+        "country_code": "country"
+      },
+      "initial_sources": {
+        "name": "name",
+        "email": "email",
+        "signup_date": "joined",
+        "subscription_tier": "tier",
+        "country_code": "country"
+      },
+      "final_sources": {
+        "name": "name",
+        "email": "email",
+        "signup_date": "joined",
+        "subscription_tier": null,
+        "country_code": "country"
+      },
+      "source_differences": [],
+      "preview_feedback": [],
+      "alias_rejection_audit": [],
+      "category_outcome": {
+        "strategy": "profile_lookup",
+        "status": "skipped",
+        "source_column": null,
+        "refinements": 0,
+        "rejected_proposals": 0,
+        "reason": "no_category_source",
+        "source_profile": {
+          "total_rows": 3,
+          "candidates": [
+            {
+              "source": "tier",
+              "canonical_rows": 3,
+              "documented_alias_rows": 0,
+              "supported_rows": 3
+            },
+            {
+              "source": "package",
+              "canonical_rows": 0,
+              "documented_alias_rows": 3,
+              "supported_rows": 3
+            },
+            {
+              "source": "name",
+              "canonical_rows": 0,
+              "documented_alias_rows": 0,
+              "supported_rows": 0
+            },
+            {
+              "source": "email",
+              "canonical_rows": 0,
+              "documented_alias_rows": 0,
+              "supported_rows": 0
+            },
+            {
+              "source": "joined",
+              "canonical_rows": 0,
+              "documented_alias_rows": 0,
+              "supported_rows": 0
+            },
+            {
+              "source": "country",
+              "canonical_rows": 0,
+              "documented_alias_rows": 0,
+              "supported_rows": 0
+            }
+          ],
+          "truncated": false,
+          "strong_candidate": null,
+          "abstain_reason": "competing_coverage"
+        },
+        "source_review_reason": "competing_coverage"
+      },
+      "calls": [
+        {
+          "agent": "MappingAgent",
+          "duration_ms": 10463,
+          "mapping_sources": {
+            "name": "name",
+            "email": "email",
+            "signup_date": "joined",
+            "subscription_tier": "tier",
+            "country_code": "country"
+          },
+          "category_output": null,
+          "candidate_profiles": {
+            "total_rows": 3,
+            "candidates": [
+              {
+                "source": "tier",
+                "canonical_rows": 3,
+                "documented_alias_rows": 0,
+                "supported_rows": 3
+              },
+              {
+                "source": "package",
+                "canonical_rows": 0,
+                "documented_alias_rows": 3,
+                "supported_rows": 3
+              },
+              {
+                "source": "name",
+                "canonical_rows": 0,
+                "documented_alias_rows": 0,
+                "supported_rows": 0
+              },
+              {
+                "source": "email",
+                "canonical_rows": 0,
+                "documented_alias_rows": 0,
+                "supported_rows": 0
+              },
+              {
+                "source": "joined",
+                "canonical_rows": 0,
+                "documented_alias_rows": 0,
+                "supported_rows": 0
+              },
+              {
+                "source": "country",
+                "canonical_rows": 0,
+                "documented_alias_rows": 0,
+                "supported_rows": 0
+              }
+            ],
+            "truncated": false,
+            "strong_candidate": null,
+            "abstain_reason": "competing_coverage"
+          },
+          "preview_feedback": null,
+          "error_type": null
+        }
+      ],
+      "affected_rows": 0,
+      "unresolved_rows": 0,
+      "model_calls": 1,
+      "workflow_ms": 10828.002,
+      "category_stage_ms": 0.007,
+      "failure": null
+    },
+    {
+      "case": "weak_coverage",
+      "variant": "profile_lookup",
+      "expected_pairs": {},
+      "tier_source": null,
+      "accepted_pairs": {},
+      "correct": 0,
+      "python_rejections": 0,
+      "mapping_output_rejections": 0,
+      "pair_edits": 0,
+      "source_edits": 0,
+      "tier_source_correct": true,
+      "expected_sources": {
+        "name": "name",
+        "email": "email",
+        "signup_date": "joined",
+        "subscription_tier": null,
+        "country_code": "country"
+      },
+      "initial_sources": {
+        "name": "name",
+        "email": "email",
+        "signup_date": "joined",
+        "subscription_tier": "tier",
+        "country_code": "country"
+      },
+      "final_sources": {
+        "name": "name",
+        "email": "email",
+        "signup_date": "joined",
+        "subscription_tier": null,
+        "country_code": "country"
+      },
+      "source_differences": [],
+      "preview_feedback": [],
+      "alias_rejection_audit": [],
+      "category_outcome": {
+        "strategy": "profile_lookup",
+        "status": "skipped",
+        "source_column": null,
+        "refinements": 0,
+        "rejected_proposals": 0,
+        "reason": "no_category_source",
+        "source_profile": {
+          "total_rows": 4,
+          "candidates": [
+            {
+              "source": "tier",
+              "canonical_rows": 1,
+              "documented_alias_rows": 0,
+              "supported_rows": 1
+            },
+            {
+              "source": "name",
+              "canonical_rows": 0,
+              "documented_alias_rows": 0,
+              "supported_rows": 0
+            },
+            {
+              "source": "email",
+              "canonical_rows": 0,
+              "documented_alias_rows": 0,
+              "supported_rows": 0
+            },
+            {
+              "source": "joined",
+              "canonical_rows": 0,
+              "documented_alias_rows": 0,
+              "supported_rows": 0
+            },
+            {
+              "source": "country",
+              "canonical_rows": 0,
+              "documented_alias_rows": 0,
+              "supported_rows": 0
+            },
+            {
+              "source": "fee_code",
+              "canonical_rows": 0,
+              "documented_alias_rows": 0,
+              "supported_rows": 0
+            }
+          ],
+          "truncated": false,
+          "strong_candidate": null,
+          "abstain_reason": "weak_coverage"
+        },
+        "source_review_reason": "weak_coverage"
+      },
+      "calls": [
+        {
+          "agent": "MappingAgent",
+          "duration_ms": 10555,
+          "mapping_sources": {
+            "name": "name",
+            "email": "email",
+            "signup_date": "joined",
+            "subscription_tier": "tier",
+            "country_code": "country"
+          },
+          "category_output": null,
+          "candidate_profiles": {
+            "total_rows": 4,
+            "candidates": [
+              {
+                "source": "tier",
+                "canonical_rows": 1,
+                "documented_alias_rows": 0,
+                "supported_rows": 1
+              },
+              {
+                "source": "name",
+                "canonical_rows": 0,
+                "documented_alias_rows": 0,
+                "supported_rows": 0
+              },
+              {
+                "source": "email",
+                "canonical_rows": 0,
+                "documented_alias_rows": 0,
+                "supported_rows": 0
+              },
+              {
+                "source": "joined",
+                "canonical_rows": 0,
+                "documented_alias_rows": 0,
+                "supported_rows": 0
+              },
+              {
+                "source": "country",
+                "canonical_rows": 0,
+                "documented_alias_rows": 0,
+                "supported_rows": 0
+              },
+              {
+                "source": "fee_code",
+                "canonical_rows": 0,
+                "documented_alias_rows": 0,
+                "supported_rows": 0
+              }
+            ],
+            "truncated": false,
+            "strong_candidate": null,
+            "abstain_reason": "weak_coverage"
+          },
+          "preview_feedback": null,
+          "error_type": null
+        }
+      ],
+      "affected_rows": 0,
+      "unresolved_rows": 0,
+      "model_calls": 1,
+      "workflow_ms": 11430.271,
+      "category_stage_ms": 0.008,
+      "failure": null
+    },
+    {
+      "case": "weak_coverage",
+      "variant": "lookup",
+      "expected_pairs": {},
+      "tier_source": "tier",
+      "accepted_pairs": {},
+      "correct": 0,
+      "python_rejections": 0,
+      "mapping_output_rejections": 0,
+      "pair_edits": 0,
+      "source_edits": 1,
+      "tier_source_correct": false,
+      "expected_sources": {
+        "name": "name",
+        "email": "email",
+        "signup_date": "joined",
+        "subscription_tier": null,
+        "country_code": "country"
+      },
+      "initial_sources": {
+        "name": "name",
+        "email": "email",
+        "signup_date": "joined",
+        "subscription_tier": "tier",
+        "country_code": "country"
+      },
+      "final_sources": {
+        "name": "name",
+        "email": "email",
+        "signup_date": "joined",
+        "subscription_tier": "tier",
+        "country_code": "country"
+      },
+      "source_differences": [
+        {
+          "destination": "subscription_tier",
+          "expected": null,
+          "selected": "tier",
+          "reason": "unexpected_assignment"
+        }
+      ],
+      "preview_feedback": [],
+      "alias_rejection_audit": [],
+      "category_outcome": {
+        "strategy": "lookup",
+        "status": "skipped",
+        "source_column": "tier",
+        "refinements": 0,
+        "rejected_proposals": 0,
+        "profile": {
+          "source_column": "tier",
+          "allowed_values": [
+            "basic",
+            "pro",
+            "enterprise"
+          ],
+          "recognized_rows": 1,
+          "blank_rows": 0,
+          "noncanonical_distinct": 3,
+          "noncanonical_rows": 3,
+          "eligible_values": [],
+          "truncated": false,
+          "omitted_distinct": 3
+        },
+        "reason": "no_documented_alias_evidence"
+      },
+      "calls": [
+        {
+          "agent": "MappingAgent",
+          "duration_ms": 11164,
+          "mapping_sources": {
+            "name": "name",
+            "email": "email",
+            "signup_date": "joined",
+            "subscription_tier": "tier",
+            "country_code": "country"
+          },
+          "category_output": null,
+          "candidate_profiles": null,
+          "preview_feedback": null,
+          "error_type": null
+        }
+      ],
+      "affected_rows": 0,
+      "unresolved_rows": 3,
+      "model_calls": 1,
+      "workflow_ms": 12181.673,
+      "category_stage_ms": 644.994,
+      "failure": null
+    },
+    {
+      "case": "canonical_control",
+      "variant": "lookup",
+      "expected_pairs": {},
+      "tier_source": "plan",
+      "accepted_pairs": {},
+      "correct": 0,
+      "python_rejections": 0,
+      "mapping_output_rejections": 0,
+      "pair_edits": 0,
+      "source_edits": 0,
+      "tier_source_correct": true,
+      "expected_sources": {
+        "name": "name",
+        "email": "email",
+        "signup_date": "joined",
+        "subscription_tier": "plan",
+        "country_code": "country"
+      },
+      "initial_sources": {
+        "name": "name",
+        "email": "email",
+        "signup_date": "joined",
+        "subscription_tier": "plan",
+        "country_code": "country"
+      },
+      "final_sources": {
+        "name": "name",
+        "email": "email",
+        "signup_date": "joined",
+        "subscription_tier": "plan",
+        "country_code": "country"
+      },
+      "source_differences": [],
+      "preview_feedback": [],
+      "alias_rejection_audit": [],
+      "category_outcome": {
+        "strategy": "lookup",
+        "status": "skipped",
+        "source_column": "plan",
+        "refinements": 0,
+        "rejected_proposals": 0,
+        "reason": "no_noncanonical_values",
+        "profile": {
+          "source_column": "plan",
+          "allowed_values": [
+            "basic",
+            "pro",
+            "enterprise"
+          ],
+          "recognized_rows": 3,
+          "blank_rows": 0,
+          "noncanonical_distinct": 0,
+          "noncanonical_rows": 0,
+          "eligible_values": [],
+          "truncated": false,
+          "omitted_distinct": 0
+        }
+      },
+      "calls": [
+        {
+          "agent": "MappingAgent",
+          "duration_ms": 10345,
+          "mapping_sources": {
+            "name": "name",
+            "email": "email",
+            "signup_date": "joined",
+            "subscription_tier": "plan",
+            "country_code": "country"
+          },
+          "category_output": null,
+          "candidate_profiles": null,
+          "preview_feedback": null,
+          "error_type": null
+        }
+      ],
+      "affected_rows": 0,
+      "unresolved_rows": 0,
+      "model_calls": 1,
+      "workflow_ms": 10999.78,
+      "category_stage_ms": 0.113,
+      "failure": null
+    },
+    {
+      "case": "canonical_control",
+      "variant": "profile_lookup",
+      "expected_pairs": {},
+      "tier_source": "plan",
+      "accepted_pairs": {},
+      "correct": 0,
+      "python_rejections": 0,
+      "mapping_output_rejections": 0,
+      "pair_edits": 0,
+      "source_edits": 0,
+      "tier_source_correct": true,
+      "expected_sources": {
+        "name": "name",
+        "email": "email",
+        "signup_date": "joined",
+        "subscription_tier": "plan",
+        "country_code": "country"
+      },
+      "initial_sources": {
+        "name": "name",
+        "email": "email",
+        "signup_date": "joined",
+        "subscription_tier": "plan",
+        "country_code": "country"
+      },
+      "final_sources": {
+        "name": "name",
+        "email": "email",
+        "signup_date": "joined",
+        "subscription_tier": "plan",
+        "country_code": "country"
+      },
+      "source_differences": [],
+      "preview_feedback": [],
+      "alias_rejection_audit": [],
+      "category_outcome": {
+        "strategy": "profile_lookup",
+        "status": "skipped",
+        "source_column": "plan",
+        "refinements": 0,
+        "rejected_proposals": 0,
+        "reason": "no_noncanonical_values",
+        "profile": {
+          "source_column": "plan",
+          "allowed_values": [
+            "basic",
+            "pro",
+            "enterprise"
+          ],
+          "recognized_rows": 3,
+          "blank_rows": 0,
+          "noncanonical_distinct": 0,
+          "noncanonical_rows": 0,
+          "eligible_values": [],
+          "truncated": false,
+          "omitted_distinct": 0
+        },
+        "source_profile": {
+          "total_rows": 3,
+          "candidates": [
+            {
+              "source": "plan",
+              "canonical_rows": 3,
+              "documented_alias_rows": 0,
+              "supported_rows": 3
+            },
+            {
+              "source": "name",
+              "canonical_rows": 0,
+              "documented_alias_rows": 0,
+              "supported_rows": 0
+            },
+            {
+              "source": "email",
+              "canonical_rows": 0,
+              "documented_alias_rows": 0,
+              "supported_rows": 0
+            },
+            {
+              "source": "joined",
+              "canonical_rows": 0,
+              "documented_alias_rows": 0,
+              "supported_rows": 0
+            },
+            {
+              "source": "country",
+              "canonical_rows": 0,
+              "documented_alias_rows": 0,
+              "supported_rows": 0
+            }
+          ],
+          "truncated": false,
+          "strong_candidate": "plan",
+          "abstain_reason": null
+        }
+      },
+      "calls": [
+        {
+          "agent": "MappingAgent",
+          "duration_ms": 11815,
+          "mapping_sources": {
+            "name": "name",
+            "email": "email",
+            "signup_date": "joined",
+            "subscription_tier": "plan",
+            "country_code": "country"
+          },
+          "category_output": null,
+          "candidate_profiles": {
+            "total_rows": 3,
+            "candidates": [
+              {
+                "source": "plan",
+                "canonical_rows": 3,
+                "documented_alias_rows": 0,
+                "supported_rows": 3
+              },
+              {
+                "source": "name",
+                "canonical_rows": 0,
+                "documented_alias_rows": 0,
+                "supported_rows": 0
+              },
+              {
+                "source": "email",
+                "canonical_rows": 0,
+                "documented_alias_rows": 0,
+                "supported_rows": 0
+              },
+              {
+                "source": "joined",
+                "canonical_rows": 0,
+                "documented_alias_rows": 0,
+                "supported_rows": 0
+              },
+              {
+                "source": "country",
+                "canonical_rows": 0,
+                "documented_alias_rows": 0,
+                "supported_rows": 0
+              }
+            ],
+            "truncated": false,
+            "strong_candidate": "plan",
+            "abstain_reason": null
+          },
+          "preview_feedback": null,
+          "error_type": null
+        }
+      ],
+      "affected_rows": 0,
+      "unresolved_rows": 0,
+      "model_calls": 1,
+      "workflow_ms": 12696.248,
+      "category_stage_ms": 0.054,
+      "failure": null
+    },
+    {
+      "case": "unfamiliar_control",
+      "variant": "profile_lookup",
+      "expected_pairs": {
+        "starter": "basic",
+        "professional": "pro"
+      },
+      "tier_source": "access_level",
+      "accepted_pairs": {
+        "professional": "pro",
+        "starter": "basic"
+      },
+      "correct": 2,
+      "python_rejections": 0,
+      "mapping_output_rejections": 0,
+      "pair_edits": 0,
+      "source_edits": 0,
+      "tier_source_correct": true,
+      "expected_sources": {
+        "name": "name",
+        "email": "email",
+        "signup_date": "joined",
+        "subscription_tier": "access_level",
+        "country_code": "country"
+      },
+      "initial_sources": {
+        "name": "name",
+        "email": "email",
+        "signup_date": "joined",
+        "subscription_tier": "access_level",
+        "country_code": "country"
+      },
+      "final_sources": {
+        "name": "name",
+        "email": "email",
+        "signup_date": "joined",
+        "subscription_tier": "access_level",
+        "country_code": "country"
+      },
+      "source_differences": [],
+      "preview_feedback": [],
+      "alias_rejection_audit": [],
+      "category_outcome": {
+        "strategy": "profile_lookup",
+        "status": "proposed",
+        "source_column": "access_level",
+        "refinements": 0,
+        "rejected_proposals": 0,
+        "profile": {
+          "source_column": "access_level",
+          "allowed_values": [
+            "basic",
+            "pro",
+            "enterprise"
+          ],
+          "recognized_rows": 2,
+          "blank_rows": 0,
+          "noncanonical_distinct": 2,
+          "noncanonical_rows": 2,
+          "eligible_values": [
+            {
+              "value": "professional",
+              "rows": 1
+            },
+            {
+              "value": "starter",
+              "rows": 1
+            }
+          ],
+          "truncated": false,
+          "omitted_distinct": 0
+        },
+        "reason": null,
+        "source_profile": {
+          "total_rows": 4,
+          "candidates": [
+            {
+              "source": "access_level",
+              "canonical_rows": 2,
+              "documented_alias_rows": 2,
+              "supported_rows": 4
+            },
+            {
+              "source": "name",
+              "canonical_rows": 0,
+              "documented_alias_rows": 0,
+              "supported_rows": 0
+            },
+            {
+              "source": "email",
+              "canonical_rows": 0,
+              "documented_alias_rows": 0,
+              "supported_rows": 0
+            },
+            {
+              "source": "joined",
+              "canonical_rows": 0,
+              "documented_alias_rows": 0,
+              "supported_rows": 0
+            },
+            {
+              "source": "country",
+              "canonical_rows": 0,
+              "documented_alias_rows": 0,
+              "supported_rows": 0
+            }
+          ],
+          "truncated": false,
+          "strong_candidate": "access_level",
+          "abstain_reason": null
+        }
+      },
+      "calls": [
+        {
+          "agent": "MappingAgent",
+          "duration_ms": 11494,
+          "mapping_sources": {
+            "name": "name",
+            "email": "email",
+            "signup_date": "joined",
+            "subscription_tier": "access_level",
+            "country_code": "country"
+          },
+          "category_output": null,
+          "candidate_profiles": {
+            "total_rows": 4,
+            "candidates": [
+              {
+                "source": "access_level",
+                "canonical_rows": 2,
+                "documented_alias_rows": 2,
+                "supported_rows": 4
+              },
+              {
+                "source": "name",
+                "canonical_rows": 0,
+                "documented_alias_rows": 0,
+                "supported_rows": 0
+              },
+              {
+                "source": "email",
+                "canonical_rows": 0,
+                "documented_alias_rows": 0,
+                "supported_rows": 0
+              },
+              {
+                "source": "joined",
+                "canonical_rows": 0,
+                "documented_alias_rows": 0,
+                "supported_rows": 0
+              },
+              {
+                "source": "country",
+                "canonical_rows": 0,
+                "documented_alias_rows": 0,
+                "supported_rows": 0
+              }
+            ],
+            "truncated": false,
+            "strong_candidate": "access_level",
+            "abstain_reason": null
+          },
+          "preview_feedback": null,
+          "error_type": null
+        }
+      ],
+      "affected_rows": 2,
+      "unresolved_rows": 0,
+      "model_calls": 1,
+      "workflow_ms": 12230.274,
+      "category_stage_ms": 366.471,
+      "failure": null
+    },
+    {
+      "case": "unfamiliar_control",
+      "variant": "lookup",
+      "expected_pairs": {
+        "starter": "basic",
+        "professional": "pro"
+      },
+      "tier_source": "access_level",
+      "accepted_pairs": {
+        "professional": "pro",
+        "starter": "basic"
+      },
+      "correct": 2,
+      "python_rejections": 0,
+      "mapping_output_rejections": 0,
+      "pair_edits": 0,
+      "source_edits": 0,
+      "tier_source_correct": true,
+      "expected_sources": {
+        "name": "name",
+        "email": "email",
+        "signup_date": "joined",
+        "subscription_tier": "access_level",
+        "country_code": "country"
+      },
+      "initial_sources": {
+        "name": "name",
+        "email": "email",
+        "signup_date": "joined",
+        "subscription_tier": "access_level",
+        "country_code": "country"
+      },
+      "final_sources": {
+        "name": "name",
+        "email": "email",
+        "signup_date": "joined",
+        "subscription_tier": "access_level",
+        "country_code": "country"
+      },
+      "source_differences": [],
+      "preview_feedback": [],
+      "alias_rejection_audit": [],
+      "category_outcome": {
+        "strategy": "lookup",
+        "status": "proposed",
+        "source_column": "access_level",
+        "refinements": 0,
+        "rejected_proposals": 0,
+        "profile": {
+          "source_column": "access_level",
+          "allowed_values": [
+            "basic",
+            "pro",
+            "enterprise"
+          ],
+          "recognized_rows": 2,
+          "blank_rows": 0,
+          "noncanonical_distinct": 2,
+          "noncanonical_rows": 2,
+          "eligible_values": [
+            {
+              "value": "professional",
+              "rows": 1
+            },
+            {
+              "value": "starter",
+              "rows": 1
+            }
+          ],
+          "truncated": false,
+          "omitted_distinct": 0
+        },
+        "reason": null
+      },
+      "calls": [
+        {
+          "agent": "MappingAgent",
+          "duration_ms": 10607,
+          "mapping_sources": {
+            "name": "name",
+            "email": "email",
+            "signup_date": "joined",
+            "subscription_tier": "access_level",
+            "country_code": "country"
+          },
+          "category_output": null,
+          "candidate_profiles": null,
+          "preview_feedback": null,
+          "error_type": null
+        }
+      ],
+      "affected_rows": 2,
+      "unresolved_rows": 0,
+      "model_calls": 1,
+      "workflow_ms": 11605.002,
+      "category_stage_ms": 616.573,
+      "failure": null
+    }
+  ],
+  "summary": {
+    "lookup": {
+      "correct": 2,
+      "python_rejections": 0,
+      "pair_edits": 6,
+      "source_edits": 5,
+      "tier_source_correct": 3,
+      "model_calls": 8,
+      "expected": 8,
+      "failures": 0,
+      "median_workflow_ms": 12206.651000000002,
+      "total_workflow_ms": 98756.029
+    },
+    "profile_lookup": {
+      "correct": 8,
+      "python_rejections": 0,
+      "pair_edits": 0,
+      "source_edits": 0,
+      "tier_source_correct": 8,
+      "model_calls": 8,
+      "expected": 8,
+      "failures": 0,
+      "median_workflow_ms": 11887.3515,
+      "total_workflow_ms": 95771.806
+    }
+  }
+}

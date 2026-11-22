@@ -2,7 +2,7 @@
 
 ## One-minute explanation
 
-DataBridge onboards customer CSVs using inspectable AI mapping proposals and exact human approval. React sends authenticated uploads to FastAPI. Local Nomic embeddings retrieve policy passages from pgvector; Qwen3 proposes a typed mapping through Google ADK. Python owns schema constraints and full-file validation. An operator resolves ambiguous dates, validates and approves the exact version. A locked transaction imports accepted records, while unique normalized emails and persisted idempotency results protect retries. A 16-case synthetic comparison found no final quality gain from Reviewer, so it defaults off. The verified deployment is local; cloud configuration is prepared and unverified.
+DataBridge onboards customer CSVs using inspectable AI mapping proposals and exact human approval. React sends authenticated uploads to FastAPI. Local Nomic embeddings retrieve policy passages from pgvector; Qwen3 proposes a typed mapping through Google ADK. Python owns schema constraints and full-file validation. An operator resolves ambiguous dates, validates and approves the exact version. A locked transaction imports accepted records, while unique normalized emails and persisted idempotency results protect retries. The default workflow profiles source columns before calling the Mapping Agent and applies documented tier aliases in Python. A historical 16-case comparison found no final quality gain from the generic Reviewer. The verified deployment is local; cloud configuration is prepared and unverified.
 
 ## Discuss the boundaries
 

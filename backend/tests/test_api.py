@@ -166,7 +166,8 @@ def test_auth_csrf_and_ownership(client):
 
 def test_mock_suggestions_and_citations(client):
     case = next(c for c in cases() if c.name == "tier_alias")
-    response = client.post("/api/uploads", files={"file": ("case.csv", case.csv)})
+    csv = case.csv + b"Second Example,second@example.com,2025-03-04,pro,GB\n"
+    response = client.post("/api/uploads", files={"file": ("case.csv", csv)})
     url = "/api/uploads/" + response.json()["id"]
     response = client.post(url + "/suggest")
     assert response.status_code == 200, response.text

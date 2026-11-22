@@ -1,6 +1,6 @@
 # Architecture
 
-DataBridge separates AI proposals from application-controlled validation, approval and import. [agents.py](../backend/app/agents.py) runs Google ADK with an Investigator and an optional sequential Reviewer. Neither agent has an import, approval, shell or SQL tool. Local Qwen3 generation is served by Windows Ollama; Nomic CPU query embeddings feed pgvector retrieval.
+DataBridge separates AI proposals from application-controlled validation, approval and import. [agents.py](../backend/app/agents.py) profiles tier values before the Google ADK Mapping Agent call and applies documented aliases by exact lookup. An explicit comparison mode delegates tier aliases to a Category Transformation Agent. Neither agent has an import, approval, shell or SQL tool. Local Qwen3 generation is served by Windows Ollama; Nomic CPU query embeddings feed pgvector retrieval.
 
 ~~~mermaid
 flowchart LR
@@ -8,9 +8,13 @@ flowchart LR
     UI --> API[FastAPI / session + CSRF]
     API --> PG[(PostgreSQL + pgvector)]
     API --> Retrieval[Policy retrieval]
-    Retrieval --> AI[ADK Investigator / optional Reviewer]
+    Retrieval --> AI[ADK Mapping Agent]
     AI <--> Ollama[Local Ollama]
-    AI --> UI
+    API --> Profile[Candidate column profiles]
+    Profile --> AI
+    AI --> Lookup[Source guard and documented alias lookup]
+    Lookup --> Preview[Read-only category preview]
+    Preview --> UI
     UI --> Rules[Python validation]
     Rules --> Approval[Exact version approval]
     Approval --> Import[Locked transaction / idempotency]
@@ -26,6 +30,8 @@ flowchart LR
 - [retrieval.py](../backend/app/retrieval.py) and [local_provider.py](../backend/app/local_provider.py): collection-isolated ingestion, cosine retrieval, endpoint restrictions and local transports.
 
 An upload retains parsed original values, physical ending-line numbers, original-byte hash and immutable workflow snapshots. GCS archival is optional and unverified in the cloud. The database contains customer data and requires operational retention/backup decisions.
+
+The Mapping Agent receives bounded coverage counts for candidate columns. The optional Category Transformation Agent receives the selected source, counts of documented aliases, and policy references. Unknown row values stay out of these profiles. The read-only preview uses the same trim and validation rules as import, checks each cited pair against the policy, and shows unresolved values. Operators can save explicit manual rules. Historical Reviewer traces retain their original format.
 
 ## State and import correctness
 

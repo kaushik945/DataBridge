@@ -361,9 +361,7 @@ def suggest(upload_id: str, op=Depends(operator), db: SQLSession = Depends(datab
                 db,
                 item.headers,
                 item.rows,
-                reviewer=settings.local_reviewer
-                if settings.ai_mode == "local"
-                else True,
+                category_strategy=settings.tier_mapping_strategy,
             )
         )
     except Exception as exc:
@@ -397,6 +395,25 @@ def suggest(upload_id: str, op=Depends(operator), db: SQLSession = Depends(datab
     audit(db, op, "agents_completed", item, mode=settings.ai_mode)
     db.commit()
     return serial_upload(db, item)
+
+
+@app.post("/api/uploads/{upload_id}/category-preview")
+def preview_categories(
+    upload_id: str,
+    mapping: Mapping,
+    op=Depends(operator),
+    db: SQLSession = Depends(database),
+):
+    from .categories import category_preview
+
+    item = owned(db, op, upload_id)
+    return category_preview(
+        mapping,
+        item.headers,
+        item.rows,
+        set(db.scalars(select(Customer.email))),
+        (item.agent_run or {}).get("evidence", []),
+    )
 
 
 @app.post("/api/uploads/{upload_id}/validate")
